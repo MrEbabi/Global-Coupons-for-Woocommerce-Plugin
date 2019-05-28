@@ -1,6 +1,7 @@
 <?php
+
 //function to get all global coupons
-function get_all_global_coupons() 
+function global_coupons_get_all_global_coupons() 
 {
     $args = array(
         //get all coupons that starts with string GC
@@ -16,7 +17,7 @@ function get_all_global_coupons()
 }
 
 //function to get all product categories to list
-function get_all_categories() 
+function global_coupons_get_all_categories() 
 {
     $args = array(
         'post_per_page' =>  -1,
@@ -30,7 +31,7 @@ function get_all_categories()
 }
 
 //function to get all products to list
-function get_all_products()
+function global_couponsget_all_products()
 {
     $args = array(
         'post_per_page' =>  -1,
@@ -44,34 +45,24 @@ function get_all_products()
 }
 
 //validate email input
-function check_email_inputs($emailToCheck)
+function global_coupons_check_email_inputs($emailToCheck)
 {
     $isEmail = true;
-    
-    $minLength = 5;
-    $haveBlank = explode (' ', $emailToCheck);
     $emails = explode(',',$emailToCheck);
     
-    if(count($haveBlank)>1) $isEmail = false;
-    if($minLength>strlen($emailToCheck)) $isEmail = false;
-    else
+    foreach($emails as $email)
     {
-        foreach($emails as $email)
+        if(!is_email($email))
         {
-            $emailParts = explode('@', $email);
-            if(count($emailParts)!=2) $isEmail = false;
-            else
-            {
-                $haveDot = explode('.',$emailPart[1]);
-                if(!count($haveDot)) $isEmail = false;
-            }
+            $isEmail = false;
         }
     }
+    
     return $isEmail;
 }
 
 //validate date interval input
-function check_date_inputs($dateToCheck)
+function global_coupons_check_date_inputs($dateToCheck)
 {
     $isDate = true;
     
