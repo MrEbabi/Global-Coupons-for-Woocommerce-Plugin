@@ -1,7 +1,8 @@
 <?php
+
 //user side - my account coupons page
 function global_coupons_my_account_page() {
-    $coupons = get_all_global_coupons();
+    $coupons = global_coupons_get_all_global_coupons();
     $content = "<table id='customers'>";
     $content .= "<tr><th>Coupon Code</th><th>Coupon Type</th><th>Coupon Amount</th><th>Comment/Condition</th><th>Status</th><th>Apply Coupon</th></tr>";
     foreach($coupons as $coupon)
@@ -64,6 +65,7 @@ function global_coupons_my_account_page() {
         {
             $requiredAmountOfOrders = substr($coupon_description, 24);
             global_coupons_amount_of_orders($coupon_id, $requiredAmountOfOrders);
+            
             //add currency symbol to the start of coupon description without changing the original excerpt
             $coupon_description = "Total amount of orders: " . get_woocommerce_currency_symbol() . $requiredAmountOfOrders ;
         }
@@ -89,9 +91,9 @@ function global_coupons_my_account_page() {
         {
             if($isActive)
             {
-                if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . $coupon_amount . "%</td>" . "<td> " . $coupon_description ."</td>" . "<td style='color:green'>Active</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='$coupon_apply_text' name='appliedCoupon'>$coupon_apply_text</button></form></td>";
-                else $content .= "<tr><td> ". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . get_woocommerce_currency_symbol() . $coupon_amount . "</td>" . "<td> " . $coupon_description ."</td>" . "<td style='color:green'>Active</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='$coupon_apply_text' name='appliedCoupon'>$coupon_apply_text</button></form></td>"; 
-                if($_SERVER['REQUEST_METHOD'] === 'POST' && $coupon_apply_text != "preview")
+                if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($coupon_type) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td>" . "<td> " . esc_html($coupon_description) ."</td>" . "<td style='color:green'>Active</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td>";
+                else $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($coupon_type) . " </td> " . "<td> " . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_description) ."</td>" . "<td style='color:green'>Active</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td>"; 
+                if($_SERVER['REQUEST_METHOD'] === 'POST' && $coupon_apply_text != "preview" && $coupon_apply_text != "Empty Cart")
                 {
                     $applyCode = $_POST['appliedCoupon'];
                     if(!WC()->cart->get_applied_coupons())
@@ -103,10 +105,9 @@ function global_coupons_my_account_page() {
                 }
             }
             elseif(!($coupon_description == 'Special Discount For You')){
-                $content .= "<tr><td> ". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . get_woocommerce_currency_symbol() . $coupon_amount . "</td>" . "<td> " . $coupon_description . "</td>" . "<td style='color:red'>Deactive</td>";
+                $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($coupon_type) . " </td> " . "<td> " . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_description) . "</td>" . "<td style='color:red'>Deactive</td>";
             }
         }
-        
     }
     $content .= "</table>";
     return $content;
@@ -115,7 +116,7 @@ function global_coupons_my_account_page() {
 //shortcode for my account page
 add_shortcode('my-account-global-coupons', 'global_coupons_my_account_page');
 
-//--- my global coupons/coupons page for my account - start
+//my global coupons/coupons page for my account - start
 function global_coupons_tab_endpoint() {
     add_rewrite_endpoint( 'my-global-coupons', EP_ROOT | EP_PAGES );
 }
@@ -148,10 +149,10 @@ add_action( 'wp_loaded', 'global_coupons_tab_rewrite_rules' );
 
 add_action( 'woocommerce_account_my-global-coupons_endpoint', 'global_coupons_tab_content' );
 
-//--- my global coupons/coupons page for my account - end
+//my global coupons/coupons page for my account - end
 
 //my account page re-order tabs
-function my_account_menu_order() {
+function global_coupons_my_account_menu_order() {
  	$menuOrder = array(
  	    'dashboard'          => __( 'Dashboard', 'woocommerce' ),
  	    'my-global-coupons' => __( 'Coupons', 'woocommerce' ),
@@ -162,6 +163,6 @@ function my_account_menu_order() {
  	);
  	return $menuOrder;
  }
-add_filter ( 'woocommerce_account_menu_items', 'my_account_menu_order' );
+add_filter ( 'woocommerce_account_menu_items', 'global_coupons_my_account_menu_order' );
 
 ?>
