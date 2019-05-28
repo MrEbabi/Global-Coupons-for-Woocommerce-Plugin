@@ -9,6 +9,8 @@ Planned restrictions: First Order, Required Number of Orders, Required Amount of
 Use: Upload the zipped file to wp-content/plugins and extract there. 
 
 -----
+Version: 1.0.1:
+
 Source codes of the plugin is uploaded. Security maintenance is done for now, waiting news from WordPress Plugin Review Team.
 
 Security maintenance: Securing inputs and outputs, providing unique function names, checking permissions and using nonces.
