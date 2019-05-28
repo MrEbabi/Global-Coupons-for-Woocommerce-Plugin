@@ -6,10 +6,11 @@ Planned structure: Global Coupons - Coupon Operations - Preview - Options - Prem
 
 Planned restrictions: First Order, Required Number of Orders, Required Amount of Orders, Special For You, Required Number of Reviews, Activate Date Interval
 
-Use: Upload the zipped file to wp-content/plugins, then extract there. 
+Use: Upload the zipped file to wp-content/plugins and extract there. 
 
 -----
-Source codes of the plugin is uploaded. After the security maintenance, the plugin will be published on Wordpress.
+Source codes of the plugin is uploaded. Security maintenance is done for now, waiting news from WordPress Plugin Review Team. After the security maintenance, the plugin will be published on Wordpress.
 
-Ongoing: Securing inputs and outputs, providing unique function names, checking permissions and using nonces.
+Security maintenance: Securing inputs and outputs, providing unique function names, checking permissions and using nonces.
 
+Ongoing: Options - Premium admin submenus.
