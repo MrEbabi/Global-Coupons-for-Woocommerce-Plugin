@@ -1,4 +1,5 @@
 <?php
+
 //review (comment) count
 function global_coupons_necessary_reviews($couponid, $commentCount)
 {
