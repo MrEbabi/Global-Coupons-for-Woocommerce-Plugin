@@ -14,6 +14,7 @@ function global_coupons_admin_page() {
 function global_coupons_admin_mainmenu() {
     $coupons = global_coupons_get_all_global_coupons();
     $is_coupon_selected = false;
+    $coupon_ids = array ();
     
     //global coupon selection form
     $content = "<div class='kuponozellik'>";
@@ -26,6 +27,7 @@ function global_coupons_admin_mainmenu() {
     foreach($coupons as $coupon)
     {
         $coupon_id = $coupon->ID;
+        array_push($coupon_ids, $coupon_id);
         $coupon_name = $coupon->post_title;
         $coupon_amount = $coupon->coupon_amount;
         $coupon_description = $coupon->post_excerpt;
@@ -69,13 +71,17 @@ function global_coupons_admin_mainmenu() {
     //verify nonce before get the inputs
     if(wp_verify_nonce($_POST['nonce_of_couponSelectionForm'], 'coupon_selection_form_action') && !empty($_POST['sameRadio']) && isset($_POST['sameRadio']))
     {
-        $coupon_id = $_POST['sameRadio'];
-        $chosen_coupon = "Published Global Coupon: " . get_the_title($coupon_id) . " -> ";
-        $is_coupon_selected = true;
+        $coupon_id = sanitize_text_field($_POST['sameRadio']);
+        if(in_array($coupon_id, $coupon_ids))
+        {
+            $chosen_coupon = "Published Global Coupon: " . get_the_title($coupon_id) . " -> ";
+            $is_coupon_selected = true;   
+        }
     }
     if(wp_verify_nonce($_POST['nonce_of_couponSelectionForm'], 'coupon_selection_form_action') && isset($_POST['oldOrdersTotalAmount']) && !empty($_POST['oldOrdersTotalAmount']) && $is_coupon_selected)
     {
-        $amountOfOrders = $_POST['oldOrdersTotalAmount'];
+        $amountOfOrders = sanitize_text_field($_POST['oldOrdersTotalAmount']);
+        $amountOfOrders = absint($amountOfOrders);
         global_coupons_amount_of_orders($coupon_id, $amountOfOrders);
         $chosen_coupon .= "Selected Restriction: Total Amount of Orders";
         echo "<script type='text/javascript'>alert('".$chosen_coupon."')</script>";
@@ -83,7 +89,8 @@ function global_coupons_admin_mainmenu() {
     }
     if(wp_verify_nonce($_POST['nonce_of_couponSelectionForm'], 'coupon_selection_form_action') && isset($_POST['oldOrdersCount']) && !empty($_POST['oldOrdersCount']) && $is_coupon_selected)
     {
-        $numberOfOrders = $_POST['oldOrdersCount'];
+        $numberOfOrders = sanitize_text_field($_POST['oldOrdersCount']);
+        $numberOfOrders = absint($numberOfOrders);
         global_coupons_number_of_orders($coupon_id, $numberOfOrders);
         $chosen_coupon .= "Selected Restriction: Total Number of Orders";
         echo "<script type='text/javascript'>alert('".$chosen_coupon."')</script>";
@@ -115,7 +122,8 @@ function global_coupons_admin_mainmenu() {
     }
     if(wp_verify_nonce($_POST['nonce_of_couponSelectionForm'], 'coupon_selection_form_action') && isset($_POST['oldCommentsCount']) && !empty($_POST['oldCommentsCount']) && $is_coupon_selected)
     {
-        $howManyComments = $_POST['oldCommentsCount'];
+        $howManyComments = sanitize_text_field($_POST['oldCommentsCount']);
+        $howManyComments = absint($howManyComments);
         global_coupons_necessary_reviews($coupon_id, $howManyComments );
         $chosen_coupon .= "Selected Restriction: Total Number of Reviews";
         echo "<script type='text/javascript'>alert('".$chosen_coupon."')</script>";
@@ -170,10 +178,13 @@ function global_coupons_admin_submenu_1()
     //verify nonce before get the inputs
     if(wp_verify_nonce($_POST['nonce_of_couponCreationForm'], 'coupon_creation_form_action') && !empty($_POST['newCouponName']) && isset($_POST['newCouponName']) && !empty($_POST['newCouponType']) && isset($_POST['newCouponType']) && !empty($_POST['newCouponAmount']) && isset($_POST['newCouponAmount']))
     {
-        $_couponName = $_POST['newCouponName'];
-        if(($_POST['newCouponType']) == "1") $_couponType = "fixed_cart";
-        else $_couponType = "percent";
-        $_couponAmount = $_POST['newCouponAmount'];
+        $_couponName = sanitize_text_field($_POST['newCouponName']);
+        $_couponTypeN = sanitize_text_field($_POST['newCouponType']);
+        if( $_couponTypeN == "1") $_couponType = "fixed_cart";
+        else if( $_couponTypeN == "2") $_couponType = "percent";
+        else return;  
+        $_couponAmount = sanitize_text_field($_POST['newCouponAmount']);
+        $_couponAmount = absint($_couponAmount);
         
         //create new coupon
         $_newCoupon = array(
@@ -188,12 +199,12 @@ function global_coupons_admin_submenu_1()
         //create coupon limited to use once and individual
         //secure not defined global coupons with random email restriction
         $randomaizeEmail = rand();
-        $tempEmails = "noone$randomaizeEmail@noone.com";
+        $tempEmail = "noone$randomaizeEmail@noone.com";
         update_post_meta( $_newCouponID, 'discount_type', $_couponType );
         update_post_meta( $_newCouponID, 'coupon_amount', $_couponAmount );
         update_post_meta( $_newCouponID, 'usage_limit_per_user', '1' );
         update_post_meta( $_newCouponID, 'individual_use', 'yes' );
-        update_post_meta( $_newCouponID, 'customer_email', $tempEmails );
+        update_post_meta( $_newCouponID, 'customer_email', $tempEmail );
         wp_update_post($_newCouponID);
         header("Refresh: 0");
     }
@@ -203,6 +214,7 @@ function global_coupons_admin_submenu_1()
     
     //coupon deletion form
     $coupons = global_coupons_get_all_global_coupons();
+    $coupon_ids = array ();
     $content = "<table id='admins'>";
     $content .= "<tr><th></th><th>Coupon Code</th><th>Coupon Type</th><th>Coupon Amount</th></tr>";
     $content .= "<div class='forms'>";
@@ -213,6 +225,7 @@ function global_coupons_admin_submenu_1()
     foreach($coupons as $coupon)
     {
         $coupon_id = $coupon->ID;
+        array_push($coupon_ids, $coupon_id);
         $coupon_name = $coupon->post_title;
         $coupon_amount = $coupon->coupon_amount;
         $coupon_description = $coupon->post_excerpt;
@@ -220,8 +233,8 @@ function global_coupons_admin_submenu_1()
         if($coupon->discount_type == "fixed_cart") $coupon_type = "Fixed Cart Discount";
         else $coupon_type = "Percentage Discount";
         
-        if($coupon_type == "Percentage Discount") $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . $coupon_amount . "%</td></tr>";
-        else $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . $coupon_amount . get_woocommerce_currency_symbol() . "</td></tr>";
+        if($coupon_type == "Percentage Discount") $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='". esc_html($coupon_id)."'></td><td>". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($coupon_type) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td></tr>";
+        else $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='". esc_html($coupon_id)."'></td><td>". esc_html($coupon_name) ." </td> " . "<td> ". esc_html($coupon_type) . " </td> " . "<td> " . esc_html($coupon_amount) . get_woocommerce_currency_symbol() . "</td></tr>";
     }
     $content .= "</table>";
     echo $content;
@@ -235,8 +248,11 @@ function global_coupons_admin_submenu_1()
     //verify nonce before get the inputs
     if(wp_verify_nonce($_POST['nonce_of_couponDeletionForm'], 'coupon_deletion_form_action') && !empty($_POST['sameRadio']) && isset($_POST['sameRadio']))
     {
-        $coupon_id = $_POST['sameRadio'];
-        wp_delete_post($coupon_id); 
+        $coupon_id = sanitize_text_field($_POST['sameRadio']);
+        if(in_array($coupon_id, $coupon_ids))
+        {
+            wp_delete_post($coupon_id);    
+        }
         header("Refresh: 0");
     }
     echo global_coupons_readme_part_2();
@@ -247,14 +263,17 @@ function global_coupons_admin_submenu_1()
 //admin panel submenu2 - preview for my account page
 function global_coupons_admin_submenu_2()
 {
-    echo "<div class='preview'><h2>This is how the global coupons will be shown in the user side.</h2>";
-    echo "<h2>Be aware that, the Active/Deactive part is depending on the user account - in this case your account!</h2>";
-    echo "<h2>Also note that, if the global coupon is not defined (blank comment/condition) then users will not see that coupon in the table but admin can.</h2>";
+    $content = "<div class='preview'><h2>This is how the global coupons will be shown in the user side.</h2>";
+    $content .= "<h2>Be aware that, the Active/Deactive part is depending on the user account - in this case your account!</h2>";
+    $content .= "<h2>Also note that, if the global coupon is not defined (blank comment/condition) then users will not see that coupon in the table but admin can.</h2>";
+    
     $myCouponsLink = get_permalink( get_option('woocommerce_myaccount_page_id') );
-    $myCouponsLink .= 'my-global-coupons/';
-    echo "<h2>You can also check this preview by visiting <a href=". $myCouponsLink ." target='_blank'>My Account</a> page.</h2><br>";
-    echo "<h4><i>To ask new properties or report bugs, kindly inform <a href='mailto:globalcoupons@mrebabi.com'>globalcoupons@mrebabi.com</a></i></h4></div>";
-    echo "<h1>Preview: </h1><br>";
+    $myCouponsLink .= "my-global-coupons/";
+    
+    $content .= "<h2>You can also check this preview by visiting <a href='". esc_html($myCouponsLink) ."' target='_blank'>My Account</a> page.</h2><br>";
+    $content .= "<h4><i>To ask new properties or report bugs, kindly inform <a href='mailto:globalcoupons@mrebabi.com'>globalcoupons@mrebabi.com</a></i></h4></div>";
+    $content .= "<h1>Preview: </h1><br>";
+    echo $content;
     echo global_coupons_my_account_page();
 }
 
