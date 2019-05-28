@@ -1,7 +1,7 @@
 <?php
 
 //read me part 1 for main menu - global coupons
-function readme_part_1()
+function global_coupons_readme_part_1()
 {
     $content = "<div class='helps'>";
     $content .= "<li><b>You can edit your existing coupons from Global Coupons section to restrict them selecting the <u>properties</u>:</b></li>";
@@ -17,7 +17,7 @@ function readme_part_1()
 }
 
 //read me part 2 for submenu - coupon operations
-function readme_part_2()
+function global_coupons_readme_part_2()
 {
     $content = "<div class='helps'>";
     $content .= "<li><b>You can create Global Coupons from Coupon Operations section or remove a created one:</b></li>";
