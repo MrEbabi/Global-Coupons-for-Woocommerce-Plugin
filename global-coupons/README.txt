@@ -1,7 +1,7 @@
 === Plugin Name ===
 Plugin Name: Global Coupons for Woocommerce
 Description: Generate availability-restricted WooCommerce coupons that can be seen by customers from My Account page.
-Version: 1.0.0
+Version: 1.0.1
 Author: Mr.Ebabi
 Author URI: http://mrebabi.com
 License: GPL2
