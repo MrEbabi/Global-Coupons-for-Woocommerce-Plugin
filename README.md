@@ -6,11 +6,15 @@ Planned structure: Global Coupons - Coupon Operations - Preview - Options - Prem
 
 Planned restrictions: First Order, Required Number of Orders, Required Amount of Orders, Special For You, Required Number of Reviews, Activate Date Interval
 
-Use: Upload the zipped file to wp-content/plugins and extract there. 
+Use: Download the zipped file (global-coupons-for-woocommerce.1.0.0.zip) and upload it to wp-content/plugins using FTP or using Admin Panel -> Plugins -> Add New -> Upload Plugin, then extract there. 
 
 or
 
 Download: https://wordpress.org/plugins/global-coupons-for-woocommerce/ 
+
+or
+
+Wordpress Admin Panel -> Plugins -> Add New -> Search -> "Global Coupons for Woocommerce" -> Install -> Activate
 
 -----
 
