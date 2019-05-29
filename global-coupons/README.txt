@@ -1,5 +1,5 @@
 === Global Coupons for Woocommerce ===
-Contributors: Mr.Ebabi
+Contributors: mrebabi
 Author URI: http://mrebabi.com
 Tags: woocommerce, woocommerce coupons, coupons, dynamic coupons, global coupons, global coupons for woocommerce
 Requires at least: 3.1
@@ -12,11 +12,17 @@ Text Domain: global-coupons
 Generate availability-restricted WooCommerce coupons that can be seen and used by customer on My Account page.
 
 == Description ==
-Global Coupons are the customizated WooCommerce coupons that has several restriction options and regarding to them available for the customers. 
-Customers can inspect the Active or Deactive Global Coupons on the My Account - Coupons part. 
-If a coupon is active for customer, she/he can directly apply the coupon unless their cart is empty.
-The coupon restrictions are: First Order, Number of Orders, Amount of Orders, Special For You, Number of Reviews and Activate Date Interval.
-Use of Global Coupons at the Admin Panel is explained with examples and regular inputs for every part in admin submenus of Plugin.
+*Generate availability-restricted WooCommerce coupons that can be seen and used by customer on My Account page.
+
+*Global Coupons are the customizated WooCommerce coupons that has several restriction options and regarding to them available for the customers. 
+
+*Customers can check and use the Active or Deactive Global Coupons on the My Account - Coupons part. 
+
+*If a coupon is active for customer, she/he can directly apply the coupon unless their cart is empty.
+
+*The coupon restrictions are: First Order, Number of Orders, Amount of Orders, Special For You, Number of Reviews and Activate Date Interval.
+
+*Use of Global Coupons at the Admin Panel is explained with examples and regular inputs for every part in admin submenus of Plugin.
 
 == Installation ==
 1. Upload the entire 'global-coupons-for-woocommerce' folder to the '/wp-content/plugins/' directory or upload as a zip file then extract to the '/wp-content/plugins/'
