@@ -24,6 +24,53 @@ Generate availability-restricted WooCommerce coupons that can be seen and used b
 
 *Use of Global Coupons at the Admin Panel is explained with examples and regular inputs for every part in admin submenus of Plugin.
 
+---Global Coupons Section---
+
+You can edit your existing coupons from Global Coupons section to restrict them selecting the properties:
+
+*First Order:
+When this restriction is selected, the chosen coupon will be activate for only the customers that do not have any orders. Regular Input: Checking the box.
+
+*Number of Orders:
+This restriction is selected with #number, the chosen coupon will be activate for only the customers that have enough #number of orders. Example: 7 Orders. If a customer has 5 orders for now, customer will see this global coupon as deactive until she/he has 7 orders. Regular Input: Positive Integer
+
+*Amount of Orders:
+This restriction is selected with #amount, the chosen coupon will be activate for only the customers that have enough #amount of orders. Example: 300 USD. If a customer has several orders with total amount of 250 USD, customer will see this global coupon as deactive until she/he has 300 USD total amount. Regular Input: Positive Integer
+
+*Special For You:
+You may define a global coupon that can be only seen by the customers that you want. Other customer will not see this global coupon. Regular Input: test@test.com,test2@test2.com,test3@test3.com
+
+*Number of Reviews:
+This restriction is selected with #number, the chosen coupon will be activate for only the customers that have enough #number of reviews. Example: 5 Reviews (Product or Post Comment&Rating). If a customer has 3 reviews for now, customer will see this global coupon as deactive until she/he has 5 reviews. Regular Input: Positive Integer
+
+*Activate Date Interval:
+You may define a global coupon that will be activated between the X and Y dates. Example: 30.06.2035-25.12.2035, then customers will see this global coupon as deactive until the starting date. Regular Input: DD.MM.YYYY-DD.MM.YYYY
+
+---Coupon Operations Section---
+
+You can create Global Coupons from Coupon Operations section or remove a created one:
+
+*Create Global Coupon:
+Coupon creation is similar to the standard Woocommerce coupon creation, except the Global Coupons are created with a prefix 'GC_' to separate them from the usual coupons.
+
+*Remove Global Coupon:
+You may remove an existing Global Coupon from the list. Be careful when you decide to use the remove operation, since you may lose some order information after this operation.
+
+*Extra:
+You do not have to use this section to create/remove Global Coupons, you can easily create any standard Woocommerce Coupon with a prefix 'GC_' and use it as a Global Coupon.
+
+---Preview Section---
+
+*This is how the global coupons will be shown in the user side.
+
+*Be aware that, the Active/Deactive part is depending on the user account - in this case your account!
+
+*Also note that, if the global coupon is not defined (blank comment/condition) then users will not see that coupon in the table but admin can.
+
+*You can also check this preview by visiting My Account page.
+
+*To ask new properties or report bugs, kindly inform globalcoupons@mrebabi.com
+
 == Installation ==
 1. Upload the entire 'global-coupons-for-woocommerce' folder to the '/wp-content/plugins/' directory or upload as a zip file then extract to the '/wp-content/plugins/'
 2. Activate the plugin through the 'Plugins' menu in WordPress
