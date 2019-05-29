@@ -8,11 +8,17 @@ Planned restrictions: First Order, Required Number of Orders, Required Amount of
 
 Use: Upload the zipped file to wp-content/plugins and extract there. 
 
------
-Version: 1.0.1:
+or
 
-Source codes of the plugin is uploaded. Security maintenance is done for now, waiting news from WordPress Plugin Review Team.
+Download: https://wordpress.org/plugins/global-coupons-for-woocommerce/ 
+
+-----
+
+Version 1.0.0:
 
 Security maintenance: Securing inputs and outputs, providing unique function names, checking permissions and using nonces.
+Plugin is reviewed by the WordPress Plugin Review Team and now published on Wordpress Plugins.
+
+Planned Version: 1.0.1:
 
 Ongoing: Options - Premium admin submenus.
