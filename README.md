@@ -25,4 +25,4 @@ Plugin is reviewed by the WordPress Plugin Review Team and now published on Word
 
 Planned Version: 1.0.1:
 
-Ongoing: Options - Premium admin submenus.
+Ongoing: Options - Premium admin submenus. README and plugin page will be updated.
