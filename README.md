@@ -23,9 +23,15 @@ Version 1.0.0:
 Security maintenance: Securing inputs and outputs, providing unique function names, checking permissions and using nonces.
 Plugin is reviewed by the WordPress Plugin Review Team and now published on Wordpress Plugins.
 
-Planned Version: 1.0.1:
+Version 1.0.1:
 
+Requirements: To install and activate the Global Coupons for Woocommerce, first you need to install and activate the WooCommerce plugin.
+Editions: README is updated as mentioned in Changelog.
+
+-----
+
+Planned version 1.1.0
 Ongoing: 
 - List the global coupons and count the activate coupons for users
 - Show the orders which any global coupons are used by listing with the relevant coupon code
-- Readability work for README
+- A video tutorial for example usage.
