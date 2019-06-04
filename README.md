@@ -25,4 +25,7 @@ Plugin is reviewed by the WordPress Plugin Review Team and now published on Word
 
 Planned Version: 1.0.1:
 
-Ongoing: Options - Premium admin submenus. README and plugin page will be updated.
+Ongoing: 
+- List the global coupons and count the activate coupons for users
+- Show the orders which any global coupons are used by listing with the relevant coupon code
+- Readability work for README
