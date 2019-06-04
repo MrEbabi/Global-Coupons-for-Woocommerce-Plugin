@@ -1,13 +1,15 @@
 <?php
 /*
 Plugin Name: Global Coupons for Woocommerce
-Description: Generate availability-restricted WooCommerce coupons that can be seen by customers from My Account page.
-Version: 1.0.0
+Description: Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.
+Version: 1.0.1
 Author: Mr.Ebabi
 Author URI: http://mrebabi.com
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons
+WC requires at least: 2.5
+WC tested up to:  3.6.4 
 */
 
 if(!defined('ABSPATH'))
