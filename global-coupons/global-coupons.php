@@ -23,6 +23,33 @@ if(!function_exists('add_action'))
     exit;
 }
 
+//require woocommerce to install global coupons for woocommerce
+add_action( 'admin_init', 'global_coupons_require_woocommerce' );
+
+function global_coupons_require_woocommerce() {
+    if ( is_admin() && current_user_can( 'activate_plugins' ) &&  !is_plugin_active( 'woocommerce/woocommerce.php' ) ) 
+    {
+        add_action( 'admin_notices', 'global_coupons_require_woocommerce_notice' );
+
+        deactivate_plugins( plugin_basename( __FILE__ ) ); 
+
+        if ( isset( $_GET['activate'] ) ) 
+        {
+            unset( $_GET['activate'] );
+        }
+    }
+}
+
+//throw admin notice if woocommerce is not active
+function global_coupons_require_woocommerce_notice(){
+    ?>
+    <style>a.global-coupons-settings{display:none;}</style>
+    <div class="error"><p>Sorry, but Global Coupons for Woocommerce requires the Woocommerce plugin to be installed and active.</p></div>
+    <?php
+    return;
+}
+
+//settings link for plugin page
 function global_coupons_settings_link( $links ) 
 {
     if(!is_admin()) exit();
