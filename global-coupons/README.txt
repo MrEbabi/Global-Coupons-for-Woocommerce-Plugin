@@ -7,7 +7,7 @@ Tested up to: 5.2.1
 Stable tag: 1.0.1
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: global-coupons
+Text Domain: global-coupons-for-woocommerce
 
 Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.
 
