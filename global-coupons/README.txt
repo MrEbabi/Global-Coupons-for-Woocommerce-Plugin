@@ -15,7 +15,7 @@ Generate availability-restricted WooCommerce coupons and let customers to see&us
 
 **Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.**
 
-Global Coupons are the customizated WooCommerce coupons that has several restriction options and regarding to them available for the customers. Customers can check and use the Active or Deactive Global Coupons on the My Account - Coupons part. If a coupon is active for customer, customer can directly apply the coupon unless their cart is empty.
+Global Coupons are the customizated WooCommerce coupons which have several restriction options and regarding to those restrictions, the coupons are available for the customers. Customers can check and use the Active or Deactive Global Coupons on the My Account - Coupons part. If a coupon is active for customer, customer can directly apply the coupon unless their cart is empty.
 
 **The coupon restrictions are: First Order, Number of Orders, Amount of Orders, Special For You, Number of Reviews and Activate Date Interval.**
 
