@@ -88,10 +88,11 @@ Since your need may become a need for someone else in future, of course, we will
 7. Applied Global Coupon to cart (user side)
 
 == Changelog ==
-=1.0.0=
-*Hello World. This is the first version of the Global Coupons for Woocommerce.
-*Initialized the source code.
-*So it begins...
-=1.0.1=
-*Description and FAQ are re-written and whole README re-designed for a better view.
-*Woocommerce activation is required to install&activate the Global Coupons for Woocommerce now.
+**=1.0.0=**
+-Hello World. This is the first version of the Global Coupons for Woocommerce.
+-Initialized the source code.
+-So it begins...
+
+**=1.0.1=**
+-Description and FAQ are re-written and whole README re-designed for a better view.
+-Woocommerce activation is required to install&activate the Global Coupons for Woocommerce now.
