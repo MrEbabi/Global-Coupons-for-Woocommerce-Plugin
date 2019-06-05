@@ -7,7 +7,7 @@ Author: Mr.Ebabi
 Author URI: https://github.com/MrEbabi
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: global-coupons
+Text Domain: global-coupons-for-woocommerce
 WC requires at least: 2.5
 WC tested up to:  3.6.4 
 */
