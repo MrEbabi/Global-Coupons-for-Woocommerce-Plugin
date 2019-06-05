@@ -1,7 +1,7 @@
 === Global Coupons for Woocommerce ===
 Contributors: mrebabi
-Author URI: http://mrebabi.com
-Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, coupons, dynamic coupons, global coupons, global coupons for woocommerce
+Author URI: https://github.com/MrEbabi
+Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, coupons, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
 Tested up to: 5.2.1
 Stable tag: 1.0.1
