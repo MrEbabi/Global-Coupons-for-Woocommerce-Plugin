@@ -32,7 +32,8 @@ Editions: README is updated as mentioned in Changelog.
 
 Planned version 1.1.0:
 
-Ongoing: 
+To-Do: 
 - List the global coupons and count the activate coupons for users.
 - Show the orders which any global coupons are used by listing with the relevant coupon code.
 - A video tutorial for example usage.
+- General language settings will automatically change the language of the plugin.
