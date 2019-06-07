@@ -3,7 +3,7 @@
 //review (comment) count
 function global_coupons_necessary_reviews($couponid, $commentCount)
 {
-    $customers = get_users( array( 'fields' => array( 'ID' ) ) );
+    $customers = global_coupons_get_all_users();
     $emails = array();
     
     //traverse all users and count their reviews
@@ -51,7 +51,7 @@ function global_coupons_special_for_you($couponid, $couponemails)
 //first order
 function global_coupons_first_order($couponid)
 {
-    $customers = get_users( array( 'fields' => array( 'ID' ) ) );
+    $customers = global_coupons_get_all_users();
     $emails = array();
     
     //traverse all users to see whether they have buy something or not
@@ -131,7 +131,7 @@ function global_coupons_activate_on_dates($couponid, $dates)
 //required number of orders
 function global_coupons_number_of_orders($couponid, $number)
 {
-    $customers = get_users( array( 'fields' => array( 'ID' ) ) );
+    $customers = global_coupons_get_all_users();
     $emails = array();
     
     //traverse all users to see whether they have buy something or not
@@ -174,7 +174,7 @@ function global_coupons_number_of_orders($couponid, $number)
 //required amount of orders
 function global_coupons_amount_of_orders($couponid, $amount)
 {
-    $customers = get_users( array( 'fields' => array( 'ID' ) ) );
+    $customers = global_coupons_get_all_users();
     $emails = array();
     
     //traverse all users to see whether they have buy something or not
