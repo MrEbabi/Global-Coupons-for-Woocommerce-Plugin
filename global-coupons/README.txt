@@ -4,7 +4,7 @@ Author URI: https://github.com/MrEbabi
 Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, coupons, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
 Tested up to: 5.2.1
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons-for-woocommerce
@@ -15,7 +15,7 @@ Generate availability-restricted WooCommerce coupons and let customers to see&us
 
 **Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.**
 
-Global Coupons are customizated WooCommerce coupons which have several restriction options and regarding to those restrictions, the coupons are available for the customers. Customers can check and use the Active or Deactive Global Coupons on the My Account - Coupons part. If a coupon is active for customer, customer can directly apply the coupon unless their cart is empty.
+Global Coupons are customizated WooCommerce coupons which have several restriction options and regarding to those restrictions, the coupons are available for the customers. Customers can check the published Global Coupons on the My Account - Coupons part and see if a coupon is Active or Deactive. If a coupon is Active for customer, then customer can directly apply the coupon if their cart is not empty.
 
 **The coupon restrictions are: First Order, Number of Orders, Amount of Orders, Special For You, Number of Reviews and Activate Date Interval.**
 
@@ -60,6 +60,11 @@ You do not have to use this section to create/remove Global Coupons, you can eas
 
 Be aware that, the Active/Deactive part is depending on the user account - in this case your account! Also note that, if the global coupon is not defined (blank comment/condition) then users will not see that coupon in the table but admin can. You can also check this preview by visiting My Account page.
 
+**---Reports Section---**
+
+1. Admin can check the Activation Report of Global Coupons.
+2. Admin can check the Order Report of Global Coupons.
+
 **To ask new properties or report bugs, kindly inform globalcoupons@mrebabi.com**
 
 == Installation ==
@@ -96,3 +101,7 @@ Since your need may become a need for someone else in future, of course, we will
 **=1.0.1=**
 -Description and FAQ are re-written and whole README re-designed for a better view.
 -Woocommerce activation is required to install&activate the Global Coupons for Woocommerce now.
+
+**=1.1.0=**
+-New Feature: Report Section for Admin Panel
+-Activation Report of Global Coupons and Order Report of Global Coupons can be seen in the Reports.
