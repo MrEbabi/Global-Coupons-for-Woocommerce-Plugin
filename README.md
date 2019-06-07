@@ -31,7 +31,7 @@ Editions: README is updated as mentioned in Changelog.
 Version 1.1.0:
 
 List the global coupons and count the activate coupons for users.
-Show the orders which any global coupons are used by listing with the relevant coupon code.
+Show the orders which any global coupons are used in by listing with the relevant coupon code.
 
 -----
 
