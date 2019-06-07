@@ -31,7 +31,7 @@ function global_coupons_get_all_categories()
 }
 
 //function to get all products to list
-function global_couponsget_all_products()
+function global_coupons_get_all_products()
 {
     $args = array(
         'post_per_page' =>  -1,
@@ -42,6 +42,83 @@ function global_couponsget_all_products()
         );
     $products = get_posts( $args );
     return $products;
+}
+
+//function to get all users
+function global_coupons_get_all_users()
+{
+    $customers = get_users( array( 'fields' => array( 'ID' ) ) );
+    return $customers;
+}
+
+//function to get all orders
+function global_coupons_get_all_orders()
+{
+    $customer_orders = wc_get_orders( array(
+    'limit'    => -1,
+    'status'   => array('completed','pending','processing')
+    ) );
+    return $customer_orders;
+}
+
+//function to get all active global coupons
+function global_coupons_get_all_active($coupon)
+{
+    $count_active = 0;
+    $emails = array();
+    $customers = global_coupons_get_all_users();
+    
+    //traverse all users and count active global coupons
+    foreach($customers as $customer)
+    {
+        $isActive = false;
+        $this_customer_id = $customer->ID;
+        $user_info = get_userdata($this_customer_id);
+        $customer_email = $user_info->user_email;
+        
+        //check if given coupon is active for this customer
+        if(in_array( $customer_email , $coupon->customer_email )) 
+        {
+            $isActive = true;
+        }
+        
+        //if the coupon is active for this customer, increment the counter
+        if($isActive)
+        {
+            $count_active++;
+        }
+    }
+    
+    return $count_active;
+}
+
+//function to get all used global coupons
+function global_coupons_get_all_used($coupon)
+{
+    $count_used = 0;
+    $orders = global_coupons_get_all_orders();
+    
+    //traverse all users and count used global coupons
+    foreach($orders as $order)
+    {
+        $isUsed = false;
+        $order_discount = $order->discount_total;
+        $order_used_coupon = $order->get_used_coupons();
+        
+        //check if given coupon is used 
+        if($order_discount>0 && strtoupper($order_used_coupon[0]) == $coupon->post_title) 
+        {
+            $isUsed = true;
+        }
+        
+        //if the coupon is active for this customer, increment the counter
+        if($isUsed)
+        {
+            $count_used++;
+        }
+    }
+    
+    return $count_used;
 }
 
 //validate email input
