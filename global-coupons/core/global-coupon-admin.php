@@ -8,6 +8,7 @@ function global_coupons_admin_page() {
 	add_menu_page( 'Global Coupons', 'Global Coupons', 'manage_options' , 'global-coupons-admin-page' , 'global_coupons_admin_mainmenu', '' , '53');
 	add_submenu_page('global-coupons-admin-page', 'Coupon Operations', 'Coupon Operations', 'manage_options', 'global-coupons-admin-submenu-1', 'global_coupons_admin_submenu_1');
 	add_submenu_page('global-coupons-admin-page', 'Preview', 'Preview', 'manage_options', 'global-coupons-admin-submenu-2', 'global_coupons_admin_submenu_2');
+	add_submenu_page('global-coupons-admin-page', 'Reports', 'Reports', 'manage_options', 'global-coupons-admin-submenu-3', 'global_coupons_admin_submenu_3');
 }
 
 //admin panel main menu - global coupons and restrictions
@@ -272,9 +273,16 @@ function global_coupons_admin_submenu_2()
     
     $content .= "<h2>You can also check this preview by visiting <a href='". esc_html($myCouponsLink) ."' target='_blank'>My Account</a> page.</h2><br>";
     $content .= "<h4><i>To ask new properties or report bugs, kindly inform <a href='mailto:globalcoupons@mrebabi.com'>globalcoupons@mrebabi.com</a></i></h4></div>";
-    $content .= "<h1>Preview: </h1><br>";
+    $content .= "<div style='width:99%'><h1>Preview: </h1><br>";
     echo $content;
     echo global_coupons_my_account_page();
+    echo "</div>";
+}
+
+//admin panel submenu3 - reports for global coupons
+function global_coupons_admin_submenu_3()
+{
+	echo global_coupons_reports();
 }
 
 ?>
