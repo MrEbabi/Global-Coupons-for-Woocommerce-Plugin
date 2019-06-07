@@ -6,7 +6,7 @@ Planned structure: Global Coupons - Coupon Operations - Preview - Reports
 
 Planned restrictions: First Order, Required Number of Orders, Required Amount of Orders, Special For You, Required Number of Reviews, Activate Date Interval
 
-Use: Download the zipped file (global-coupons-for-woocommerce.1.0.0.zip) and upload it to wp-content/plugins using FTP or using Admin Panel -> Plugins -> Add New -> Upload Plugin, then extract there. 
+Use: Download the zipped file (global-coupons-for-woocommerce.1.1.0.zip) and upload it to wp-content/plugins using FTP or using Admin Panel -> Plugins -> Add New -> Upload Plugin, then extract there. 
 
 or
 
@@ -28,12 +28,13 @@ Version 1.0.1:
 Requirements: To install and activate the Global Coupons for Woocommerce, first you need to install and activate the WooCommerce plugin.
 Editions: README is updated as mentioned in Changelog.
 
+Version 1.1.0:
+
+List the global coupons and count the activate coupons for users.
+Show the orders which any global coupons are used by listing with the relevant coupon code.
+
 -----
 
-Planned version 1.1.0:
-
 To-Do: 
-- List the global coupons and count the activate coupons for users.
-- Show the orders which any global coupons are used by listing with the relevant coupon code.
 - A video tutorial for example usage.
 - General language settings will automatically change the language of the plugin.
