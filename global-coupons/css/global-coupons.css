@@ -1,3 +1,17 @@
+    div.reports-active {
+        margin-top: 2%;
+        margin-left: 2%;
+        width: 55%;
+        float: left;
+    }
+    
+    div.reports-orders {
+        margin-top: 2%;
+        margin-left: 2%;
+        width: 40%;
+        float: left;
+    }
+    
     div.kuponozellik {
         margin-top: 2%;
         margin-left: 2%;
@@ -69,7 +83,7 @@
     }
     
     div.preview{
-        width: 100%;
+        width: 99%;
         text-align: center;
         margin-top: 5px;
         margin-bottom: 15px;
