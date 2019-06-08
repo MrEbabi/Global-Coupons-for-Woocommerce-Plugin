@@ -4,7 +4,7 @@ Author URI: https://github.com/MrEbabi
 Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, coupons, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
 Tested up to: 5.2.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons-for-woocommerce
@@ -93,15 +93,18 @@ Since your need may become a need for someone else in future, of course, we will
 7. Applied Global Coupon to cart (user side)
 
 == Changelog ==
-**=1.0.0=**
--Hello World. This is the first version of the Global Coupons for Woocommerce.
--Initialized the source code.
--So it begins...
+**=1.1.1=**
+-Small bug fixes
+
+**=1.1.0=**
+-New Feature: Report Section for Admin Panel
+-Activation Report of Global Coupons and Order Report of Global Coupons can be seen in the Reports.
 
 **=1.0.1=**
 -Description and FAQ are re-written and whole README re-designed for a better view.
 -Woocommerce activation is required to install&activate the Global Coupons for Woocommerce now.
 
-**=1.1.0=**
--New Feature: Report Section for Admin Panel
--Activation Report of Global Coupons and Order Report of Global Coupons can be seen in the Reports.
+**=1.0.0=**
+-Hello World. This is the first version of the Global Coupons for Woocommerce.
+-Initialized the source code.
+-So it begins...
