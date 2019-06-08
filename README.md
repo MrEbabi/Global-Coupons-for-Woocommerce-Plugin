@@ -38,3 +38,4 @@ Show the orders which any global coupons are used in by listing with the relevan
 To-Do: 
 - A video tutorial for example usage.
 - General language settings will automatically change the language of the plugin.
+- Despite any used global coupon cannot be used again by same user, it shows Active. This bug will be solved in next version.
