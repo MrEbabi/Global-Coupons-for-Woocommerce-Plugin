@@ -4,7 +4,7 @@ Author URI: https://github.com/MrEbabi
 Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, coupons, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
 Tested up to: 5.2.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons-for-woocommerce
@@ -12,12 +12,26 @@ Text Domain: global-coupons-for-woocommerce
 Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.
 
 == Description ==
+* PUBLISH A WOOCOMMERCE COUPON ONLY ONCE AND LET THIS COUPON TO UPDATE ITSELF AUTOMATICALLY FOR EVERY CUSTOMER DEPENDING ON THE GLOBAL COUPON RESTRICTION
+
+* SHOW GLOBAL COUPONS TO CUSTOMERS ON MY ACCOUNT / COUPONS PAGE WITH THE COUPON RESTRICTION AND THE ACTIVENESS OF THE COUPON FOR THIS CUSTOMER
+
+* TRACK THE USAGE AND ACTIVENESS REPORT OF THE GLOBAL COUPONS
+
+* SEE THE ORDERS THAT GLOBAL COUPONS ARE USED
 
 **Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.**
 
 Global Coupons are customizated WooCommerce coupons which have several restriction options and regarding to those restrictions, the coupons are available for the customers. Customers can check the published Global Coupons on the My Account - Coupons part and see if a coupon is Active or Deactive. If a coupon is Active for customer, then customer can directly apply the coupon if their cart is not empty.
 
-**The coupon restrictions are: First Order, Number of Orders, Amount of Orders, Special For You, Number of Reviews and Activate Date Interval.**
+**Global Coupon Restrictions for Woocommerce Coupons**
+
+* First Order 
+* Number of Orders
+* Amount of Orders
+* Special For You
+* Number of Reviews
+* Activate Date Interval
 
 **---Global Coupons Section---**
 
@@ -93,6 +107,10 @@ Since your need may become a need for someone else in future, of course, we will
 7. Applied Global Coupon to cart (user side)
 
 == Changelog ==
+**=1.1.2=**
+-Small bug fixes
+-README and Description is more detailed now.
+
 **=1.1.1=**
 -Small bug fixes
 
