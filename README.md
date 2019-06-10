@@ -33,6 +33,11 @@ Version 1.1.0:
 List the global coupons and count the activate coupons for users.
 Show the orders which any global coupons are used in by listing with the relevant coupon code.
 
+Version 1.1.1 and 1.1.2:
+
+Small bug fixes.
+README and Description is updated for more detail.
+
 -----
 
 To-Do: 
