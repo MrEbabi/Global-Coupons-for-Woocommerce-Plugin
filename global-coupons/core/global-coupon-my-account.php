@@ -78,14 +78,10 @@ function global_coupons_my_account_page() {
         $customer_email = $user_info->user_email;
         if($coupon->customer_email != "")
         {
-            if(in_array( $customer_email , $coupon->customer_email )) 
+            if(in_array( $customer_email , $coupon->customer_email ) && ( !global_coupons_get_customer_used($coupon) )) 
             {
                 $isActive = true;
             }
-        }
-        else
-        {
-            $isActive = true;
         }
         if($coupon_description!="" || current_user_can('administrator'))
         {
