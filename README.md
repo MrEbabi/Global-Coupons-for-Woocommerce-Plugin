@@ -38,9 +38,13 @@ Version 1.1.1 and 1.1.2:
 Small bug fixes.
 README and Description is updated for more detail.
 
+Version 1.1.3:
+
+Despite any used global coupon cannot be used again by same user, it shows Active. This bug is solved now.
+
+
 -----
 
 To-Do: 
 - A video tutorial for example usage.
 - General language settings will automatically change the language of the plugin.
-- Despite any used global coupon cannot be used again by same user, it shows Active. This bug will be solved in next version.
