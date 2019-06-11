@@ -121,6 +121,32 @@ function global_coupons_get_all_used($coupon)
     return $count_used;
 }
 
+//function to get used global coupons by a specific user
+function global_coupons_get_customer_used($coupon)
+{
+    $args = array(
+    'customer_id' => get_current_user_id(),
+    );
+    
+    $orders = wc_get_orders( $args );   
+    
+    //traverse all orders of this user and check if this coupon is used
+    foreach($orders as $order)
+    {
+        $isUsed = false;
+        $order_discount = $order->discount_total;
+        $order_used_coupon = $order->get_used_coupons();
+        
+        //check if given coupon is used 
+        if($order_discount>0 && strtoupper($order_used_coupon[0]) == $coupon->post_title) 
+        {
+            return true;
+        }
+    }
+    
+    return $isUsed;
+}
+
 //validate email input
 function global_coupons_check_email_inputs($emailToCheck)
 {
