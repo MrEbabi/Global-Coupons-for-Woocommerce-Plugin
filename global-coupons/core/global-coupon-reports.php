@@ -45,7 +45,7 @@ function global_coupons_reports()
         $order_used_coupon_arr = $order->get_used_coupons();
         $order_used_coupon = $order_used_coupon_arr[0];
 
-        if($order_discount>0 && (substr($order_used_coupon, 0, 3) == 'gc_')) $content .= "<tr><td>". $order_id ."</td><td>". substr($order_date, 0, 10) ."</td><td>". ucfirst($order_status) ."</td><td>". get_woocommerce_currency_symbol() . " " . $order_total ."</td><td>". get_woocommerce_currency_symbol() . " " . $order_discount ."</td><td>". strtoupper($order_used_coupon) ."</td></tr>";
+        if($order_discount>0 && (substr($order_used_coupon, 0, 3) == 'gc_')) $content .= "<tr><td>". esc_html($order_id) ."</td><td>". esc_html(substr($order_date, 0, 10)) ."</td><td>". esc_html(ucfirst($order_status)) ."</td><td>". get_woocommerce_currency_symbol() . " " . esc_html($order_total) ."</td><td>". get_woocommerce_currency_symbol() . " " . esc_html($order_discount) ."</td><td>". esc_html(strtoupper($order_used_coupon)) ."</td></tr>";
     }
     
     $content .= "</table></div>";
