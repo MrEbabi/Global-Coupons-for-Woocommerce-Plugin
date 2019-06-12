@@ -52,6 +52,7 @@ Small bug fixes.
 Responsive problem of coupon table in my account is solved.
 Table background color and text color of table header can be changed from settings now.
 
+
 -----
 
 To-Do: 
