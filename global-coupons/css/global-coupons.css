@@ -1,3 +1,56 @@
+    @media screen and (max-width: 600px) {
+      #customers table {
+        border: 0;
+      }
+    
+      #customers table caption {
+        font-size: 1.3em;
+      }
+      
+      #customers th {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+      }
+      
+      #customers tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+      }
+      
+      #customers td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+      }
+      
+      #customers td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      
+      #customers td:last-child {
+        border-bottom: 0;
+      }
+    }
+    
+    .vertical-line {
+      border-left: 6px solid green;
+      height: 500px;
+      float: left;
+      margin-left: 5%;
+      margin-right: 2%;
+    }
+    
     div.reports-active {
         margin-top: 2%;
         margin-left: 2%;
@@ -17,6 +70,20 @@
         margin-left: 2%;
         width: 75%;
         float: left;
+    }
+    
+    div.settingsfirst {
+        margin-top: 2%;
+        margin-left: 2%;
+        width: 10%;
+        float: left;
+    }
+    
+    div.settingssecond {
+        margin-top: 2%;
+        width: 10%;
+        float: left;
+        margin-bottom: 1%;
     }
     
     div.forms {
@@ -54,8 +121,6 @@
       text-align: center;
       padding-top: 12px;
       padding-bottom: 12px;
-      background-color: #4CAF50;
-      color: white;
     }
     
     #admins {
@@ -75,6 +140,34 @@
     #admins tr:hover {background-color: #ddd;}
     
     #admins th {
+      text-align: center;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    #settings {
+      border-collapse: collapse;
+      width: 100%;
+      font-weight: bold;
+    }
+    
+    #settings tr {
+        height: 65px;
+    }
+    
+    #settings td, #settings th {
+      border: 2px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    
+    #settings tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #settings tr:hover {background-color: #ddd;}
+    
+    #settings th {
       text-align: center;
       padding-top: 12px;
       padding-bottom: 12px;
@@ -123,7 +216,7 @@
   display: block;
   margin: 10px auto; }
 
-.de-button {
+    .de-button {
   
   font-size: 15px;
   border: none;
