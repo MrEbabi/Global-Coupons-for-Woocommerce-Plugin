@@ -16,6 +16,9 @@ or
 
 Wordpress Admin Panel -> Plugins -> Add New -> Search -> "Global Coupons for Woocommerce" -> Install -> Activate
 
+
+You may also check the old versions from: https://wordpress.org/plugins/global-coupons-for-woocommerce/advanced/
+
 -----
 
 Version 1.0.0:
