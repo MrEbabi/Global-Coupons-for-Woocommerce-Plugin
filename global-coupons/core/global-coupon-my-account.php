@@ -2,111 +2,132 @@
 
 //user side - my account coupons page
 function global_coupons_my_account_page() {
-    $coupons = global_coupons_get_all_global_coupons();
-    $content = "<table id='customers'>";
-    $content .= "<tr><th>Coupon Code</th><th>Coupon Type</th><th>Coupon Amount</th><th>Comment/Condition</th><th>Status</th><th>Apply Coupon</th></tr>";
-    foreach($coupons as $coupon)
+    $anyGC = global_coupons_count_all_global_coupons();
+    if($anyGC > 0)
     {
-        $coupon_id = $coupon->ID;
-        $coupon_name = $coupon->post_title;
-        $coupon_amount = $coupon->coupon_amount;
-        $coupon_description = $coupon->post_excerpt;
-        $coupon_type = "";
-        if($coupon->discount_type == "fixed_cart") $coupon_type = "Fixed Cart Discount";
-        else $coupon_type = "Percentage Discount";
-        
-        //checking if the current page is admin panel or my account page
-        $isPreview = false;
-        global $wp;
-        $getSlug = add_query_arg( array(), $wp->request );
-        $slugArray = explode('/', $getSlug);
-        if($slugArray[1] != "my-global-coupons") $isPreview = true;
-        
-        //wc cart must be used only in my account page
-        if(!$isPreview)
+        $frontend_settings = get_option('global_coupons');
+        $coupons = global_coupons_get_all_global_coupons();
+        $content = "<table id='customers'>";
+        $content .= "<tr style='background-color:".$frontend_settings['th_bg']."; color:".$frontend_settings['th_text']."'><th>".$frontend_settings['coupon_code']."</th><th>".$frontend_settings['coupon_type']."</th><th>".$frontend_settings['coupon_amount']."</th><th>".$frontend_settings['coupon_restriction']."</th><th>".$frontend_settings['coupon_status']."</th><th>".$frontend_settings['coupon_apply']."</th></tr>";
+        foreach($coupons as $coupon)
         {
-            //apply coupon button text
-            if( WC()->cart->get_cart_contents_count() == 0 )
-            {
-                $coupon_apply_text = "Empty Cart";
-            }
-            else
-            {
-                $coupon_apply_text = $coupon_name;
-            }
-        }
-        //if it is admin panel, show preview in the button text
-        else
-        {
-            $coupon_apply_text = "preview";
-        }
-        
-        //update all predefined global coupons
-        if($coupon_description!="" && $coupon_description=="Discount For First Order") global_coupons_first_order($coupon_id);
-        elseif($coupon_description != "" && strpos($coupon_description, 'At least') !== false)
-        {
-            $howMany = substr($coupon_description, 9);
-            $strArray = explode('p', $howMany);
-            $howMany = intval($strArray[0]); 
-            global_coupons_necessary_reviews($coupon_id, $howMany ); 
-        }
-        elseif($coupon_description != "" && strpos($coupon_description, 'Available: ') !== false)
-        {
-            $dateInterval = substr($coupon_description, 11);
-            $dateInterval = str_replace(' ', '', $dateInterval);
-            global_coupons_activate_on_dates($coupon_id, $dateInterval);
-        }
-        elseif($coupon_description != "" && strpos($coupon_description, 'Required number of orders: ') !== false)
-        {
-            $requiredNumberOfOrders = substr($coupon_description, 27);
-            global_coupons_number_of_orders($coupon_id, $requiredNumberOfOrders);
-        }
-        elseif($coupon_description != "" && strpos($coupon_description, 'Total amount of orders: ') !== false)
-        {
-            $requiredAmountOfOrders = substr($coupon_description, 24);
-            global_coupons_amount_of_orders($coupon_id, $requiredAmountOfOrders);
+            $coupon_id = $coupon->ID;
+            $coupon_name = $coupon->post_title;
+            $coupon_amount = $coupon->coupon_amount;
+            $coupon_description = $coupon->post_excerpt;
+            $coupon_type = "";
+            $coupon_condition = "";
+            if($coupon->discount_type == "fixed_cart") $coupon_type = "Fixed Cart Discount";
+            else $coupon_type = "Percentage Discount";
             
-            //add currency symbol to the start of coupon description without changing the original excerpt
-            $coupon_description = "Total amount of orders: " . get_woocommerce_currency_symbol() . $requiredAmountOfOrders ;
-        }
-        
-        //check activeness for this specific user
-        $isActive = false;
-        $this_customer_id = get_current_user_id();
-        $user = get_current_user();
-        $user_info = get_userdata($this_customer_id);
-        $customer_email = $user_info->user_email;
-        if($coupon->customer_email != "")
-        {
-            if(in_array( $customer_email , $coupon->customer_email ) && ( !global_coupons_get_customer_used($coupon) )) 
+            //checking if the current page is admin panel or my account page
+            $isPreview = false;
+            global $wp;
+            $getSlug = add_query_arg( array(), $wp->request );
+            $slugArray = explode('/', $getSlug);
+            if($slugArray[1] != "my-global-coupons") $isPreview = true;
+            
+            //wc cart must be used only in my account page
+            if(!$isPreview)
             {
-                $isActive = true;
-            }
-        }
-        if($coupon_description!="" || current_user_can('administrator'))
-        {
-            if($isActive)
-            {
-                if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($coupon_type) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td>" . "<td> " . esc_html($coupon_description) ."</td>" . "<td style='color:green'>Active</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td>";
-                else $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($coupon_type) . " </td> " . "<td> " . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_description) ."</td>" . "<td style='color:green'>Active</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td>"; 
-                if($_SERVER['REQUEST_METHOD'] === 'POST' && $coupon_apply_text != "preview" && $coupon_apply_text != "Empty Cart")
+                //apply coupon button text
+                if( WC()->cart->get_cart_contents_count() == 0 )
                 {
-                    $applyCode = $_POST['appliedCoupon'];
-                    if(!WC()->cart->get_applied_coupons())
-                    {
-                        WC()->cart->add_discount( $applyCode );
-                        $cartURL = WC()->cart->get_cart_url();
-                        echo '<script type="text/javascript">window.location = "'.$cartURL.'"</script>';
-                    }
+                    $coupon_apply_text = $frontend_settings['empty_cart'];
+                }
+                else
+                {
+                    $coupon_apply_text = $coupon_name;
                 }
             }
-            elseif(!($coupon_description == 'Special Discount For You')){
-                $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($coupon_type) . " </td> " . "<td> " . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_description) . "</td>" . "<td style='color:red'>Deactive</td>";
+            //if it is admin panel, show preview in the button text
+            else
+            {
+                $coupon_apply_text = "preview";
+            }
+            
+            //update all predefined global coupons
+            if($coupon_description!="" && $coupon_description=="Discount For First Order")
+            {
+                global_coupons_first_order($coupon_id);
+                $coupon_condition = $frontend_settings['first_order'];
+            }
+            elseif($coupon_description != "" && strpos($coupon_description, 'At least') !== false)
+            {
+                $howMany = substr($coupon_description, 9);
+                $strArray = explode('p', $howMany);
+                $howMany = intval($strArray[0]); 
+                global_coupons_necessary_reviews($coupon_id, $howMany ); 
+                $coupon_condition = $frontend_settings['number_of_reviews'] . ": " . $howMany;
+            }
+            elseif($coupon_description != "" && strpos($coupon_description, 'Available: ') !== false)
+            {
+                $dateInterval = substr($coupon_description, 11);
+                $dateInterval = str_replace(' ', '', $dateInterval);
+                global_coupons_activate_on_dates($coupon_id, $dateInterval);
+                $coupon_condition = $frontend_settings['date_interval'] . ": " . $dateInterval;
+            }
+            elseif($coupon_description != "" && strpos($coupon_description, 'Required number of orders: ') !== false)
+            {
+                $requiredNumberOfOrders = substr($coupon_description, 27);
+                global_coupons_number_of_orders($coupon_id, $requiredNumberOfOrders);
+                $coupon_condition = $frontend_settings['number_of_orders'] . ": " . $requiredNumberOfOrders;
+            }
+            elseif($coupon_description != "" && strpos($coupon_description, 'Total amount of orders: ') !== false)
+            {
+                $requiredAmountOfOrders = substr($coupon_description, 24);
+                global_coupons_amount_of_orders($coupon_id, $requiredAmountOfOrders);
+                $coupon_condition = $frontend_settings['amount_of_orders'] . ": " . $requiredAmountOfOrders;
+                
+                //add currency symbol to the start of coupon description without changing the original excerpt
+                $coupon_description = "Total amount of orders: " . get_woocommerce_currency_symbol() . $requiredAmountOfOrders ;
+            }
+            
+            //check activeness for this specific user
+            $isActive = false;
+            $this_customer_id = get_current_user_id();
+            $user = get_current_user();
+            $user_info = get_userdata($this_customer_id);
+            $customer_email = $user_info->user_email;
+            if($coupon->customer_email != "")
+            {
+                if(in_array( $customer_email , $coupon->customer_email ) && ( !global_coupons_get_customer_used($coupon) )) 
+                {
+                    $isActive = true;
+                }
+            }
+            if($coupon_description!="" || current_user_can('administrator'))
+            {
+                if($isActive)
+                {
+                    if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['percentage']) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td>" . "<td> " . esc_html($coupon_condition) ."</td>" . "<td style='color:green'>".$frontend_settings['active']."</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td>";
+                    else $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['fixed_cart']) . " </td> " . "<td>" . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_condition) ."</td>" . "<td style='color:green'>".$frontend_settings['active']."</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td>"; 
+                    if($_SERVER['REQUEST_METHOD'] === 'POST' && $coupon_apply_text != "preview" && $coupon_apply_text != $frontend_settings['empty_cart'])
+                    {
+                        $applyCode = $_POST['appliedCoupon'];
+                        if(!WC()->cart->get_applied_coupons())
+                        {
+                            WC()->cart->add_discount( $applyCode );
+                            $cartURL = WC()->cart->get_cart_url();
+                            echo '<script type="text/javascript">window.location = "'.$cartURL.'"</script>';
+                        }
+                    }
+                }
+                elseif(!($coupon_description == 'Special Discount For You'))
+                {
+                    if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['percentage']) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td>" . "<td> " . esc_html($coupon_condition) . "</td>" . "<td style='color:red'>".$frontend_settings['deactive']."</td>";
+                    else $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['fixed_cart']) . " </td> " . "<td> " . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_condition) . "</td>" . "<td style='color:red'>".$frontend_settings['deactive']."</td>";
+                }
             }
         }
+        $content .= "</table>";
+        return $content;
     }
-    $content .= "</table>";
-    return $content;
+    else
+    {
+        $content = "<center>No coupons found.</center>";
+        return $content;
+    }
 }
 
 //shortcode for my account page
