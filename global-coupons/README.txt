@@ -4,7 +4,7 @@ Author URI: https://github.com/MrEbabi
 Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, coupons, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
 Tested up to: 5.2.1
-Stable tag: 1.1.3
+Stable tag: 1.2.0
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons-for-woocommerce
@@ -83,6 +83,10 @@ Be aware that, the Active/Deactive part is depending on the user account - in th
 1. Admin can check the Activation Report of Global Coupons.
 2. Admin can check the Order Report of Global Coupons.
 
+**---Settings Section---**
+
+You can customize the all text fields, background color and text color in the table header to provide better view for your customers.
+
 **To ask new properties or report bugs, kindly inform globalcoupons@mrebabi.com**
 
 == Installation ==
@@ -98,6 +102,9 @@ Yes, the plugin is tested with Wordpress 5.2.1 and Woocommerce 3.6.4 and works f
 = Can we still use standard Woocommerce Coupons while using this plugin? =
 Yes, the Global Coupons have a prefix (GC_) to make a difference from standard coupons, so you can create any coupon code which is not starting with "GC_" and use it as usual.
 
+= Is this plugin supports all languages? =
+The plugin itself does not support other languages except English, but you can edit all text fields from Settings page to show the strings in your language.
+
 = I need another restriction for my business. Can you improve your plugin for this special request? =
 Since your need may become a need for someone else in future, of course, we will be happy to develop your request and add a new restriction to Global Coupons. Please inform us by e-mail.
 
@@ -106,11 +113,19 @@ Since your need may become a need for someone else in future, of course, we will
 2. Global Coupon Deletion (admin side)
 3. Global Coupon Restriction (admin side)
 4. Global Coupon Admin Preview (admin side)
-5. Global Coupons at My Account Page (user side)
-6. User Applies Global Coupon to cart (user side)
-7. Applied Global Coupon to cart (user side)
+5. Global Coupon Admin Reports (admin side)
+6. Global Coupon Admin Settings (admin side)
+7. Global Coupons at My Account Page (user side)
+8. User Applies Global Coupon to cart (user side)
+9. Applied Global Coupon to cart (user side)
 
 == Changelog ==
+**=1.2.0=**
+-New Feature: Settings Section for Admin Panel
+-Settings for customization of text fields, background color and text color in user-side.
+-Responsive table for my account page.
+-Small bug fixes.
+
 **=1.1.3=**
 -Despite any used global coupon cannot be used again by same user, it seems like Active. This bug is fixed.
 
