@@ -1,5 +1,37 @@
 <?php
 
+//function for settings page to edit front-end
+function global_coupons_default_settings()
+{
+    //check if options are created
+    $isCreated = get_option('global_coupons');
+    
+    if($isCreated) return;
+    
+    //if not, add options
+    add_option('global_coupons', array(
+    'coupon_code'   =>  'Coupon Code',
+    'coupon_type'   =>  'Coupon Type',
+    'coupon_amount' =>  'Coupon Amount',
+    'coupon_restriction'    =>  'Comment/Condition',
+    'coupon_status' =>  'Status',
+    'coupon_apply'  =>  'Apply Coupon',
+    'fixed_cart'    =>  'Fixed Cart Discount',
+    'percentage'    =>  'Percentage Cart Discount',
+    'active'    =>  'Active',
+    'deactive'  =>  'Deactive',
+    'empty_cart'    =>  'Empty Cart',
+    'th_text'  =>  'white',
+    'th_bg' =>  '#4CAF50',
+    'first_order'   =>  'Discount For First Order',
+    'number_of_orders'  =>  'Required number of orders',
+    'amount_of_orders'  =>  'Total amount of orders',
+    'special_for_you'   =>  'Special Discount For You',
+    'number_of_reviews' =>  'Required number of reviews',
+    'date_interval' =>  'Available Between',
+    ));
+}
+
 //function to get all global coupons
 function global_coupons_get_all_global_coupons() 
 {
@@ -12,8 +44,27 @@ function global_coupons_get_all_global_coupons()
         'post_type'        => 'shop_coupon',
         'post_status'      => 'publish',
         );
+        
     $coupons = get_posts( $args );
     return $coupons;
+}
+
+//function to get all global coupons
+function global_coupons_count_all_global_coupons() 
+{
+    $args = array(
+        //get all coupons that starts with string GC
+        's'                => 'GC',
+        'posts_per_page'   => -1,
+        'orderby'          => 'title',
+        'order'            => 'asc',
+        'post_type'        => 'shop_coupon',
+        'post_status'      => 'publish',
+        );
+        
+    $coupons = get_posts( $args );
+    $result = count($coupons);
+    return $result;
 }
 
 //function to get all product categories to list
