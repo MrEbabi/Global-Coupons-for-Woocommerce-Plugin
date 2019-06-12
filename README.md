@@ -42,9 +42,14 @@ Version 1.1.3:
 
 Despite any used global coupon cannot be used again by same user, it shows Active. This bug is solved now.
 
+Version 1.2.0:
+
+Admin Settings section is added to provide translation/customization of strings in user-side.
+Small bug fixes.
+Responsive problem of coupon table in my account is solved.
+Table background color and text color of table header can be changed from settings now.
 
 -----
 
 To-Do: 
 - A video tutorial for example usage.
-- General language settings will automatically change the language of the plugin.
