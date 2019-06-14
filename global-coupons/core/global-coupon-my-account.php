@@ -125,7 +125,7 @@ function global_coupons_my_account_page() {
     }
     else
     {
-        $content = "<center>No coupons found.</center>";
+        $content = "<center>No Global Coupons found.</center>";
         return $content;
     }
 }
