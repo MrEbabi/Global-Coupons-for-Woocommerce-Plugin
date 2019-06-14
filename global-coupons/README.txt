@@ -4,7 +4,7 @@ Author URI: https://github.com/MrEbabi
 Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, coupons, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
 Tested up to: 5.2.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons-for-woocommerce
@@ -102,7 +102,7 @@ Yes, the plugin is tested with Wordpress 5.2.1 and Woocommerce 3.6.4 and works f
 = Can we still use standard Woocommerce Coupons while using this plugin? =
 Yes, the Global Coupons have a prefix (GC_) to make a difference from standard coupons, so you can create any coupon code which is not starting with "GC_" and use it as usual.
 
-= Is this plugin supports all languages? =
+= Does this plugin support all languages? =
 The plugin itself does not support other languages except English, but you can edit all text fields from Settings page to show the strings in your language.
 
 = I need another restriction for my business. Can you improve your plugin for this special request? =
@@ -120,6 +120,10 @@ Since your need may become a need for someone else in future, of course, we will
 9. Applied Global Coupon to cart (user side)
 
 == Changelog ==
+**=1.2.1=**
+-If no Global Coupons are defined, then show a notification in Global Coupons page (admin-side), Preview page (admin-side) and My Account - Coupons page (user-side).
+-Small bug fixes.
+
 **=1.2.0=**
 -New Feature: Settings Section for Admin Panel
 -Settings for customization of text fields, background color and text color in user-side.
