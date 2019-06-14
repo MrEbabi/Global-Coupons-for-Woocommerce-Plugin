@@ -3,6 +3,9 @@
 //adding admin menu
 add_action( 'admin_menu', 'global_coupons_admin_page' );
 
+//adding options
+global_coupons_default_settings();
+
 //admin menu function
 function global_coupons_admin_page() {
 	add_menu_page( 'Global Coupons', 'Global Coupons', 'manage_options' , 'global-coupons-admin-page' , 'global_coupons_admin_mainmenu', 'dashicons-star-filled' , '53');
@@ -14,10 +17,13 @@ function global_coupons_admin_page() {
 
 //admin panel main menu - global coupons and restrictions
 function global_coupons_admin_mainmenu() {
+	$anyGC = global_coupons_count_all_global_coupons();
     $coupons = global_coupons_get_all_global_coupons();
     $is_coupon_selected = false;
     $coupon_ids = array ();
     $content = "<h1>Global Coupons</h1>";
+    
+    if($anyGC <= 0) $content .= "<h2>No Global Coupons Found. Create your first Global Coupon on <a href='".admin_url( 'admin.php?page=global-coupons-admin-submenu-1' ) ."'>Coupon Operations.</a></h2>";
     
     //global coupon selection form
     $content .= "<div class='kuponozellik'>";
@@ -26,29 +32,29 @@ function global_coupons_admin_mainmenu() {
     $content .= "<div class='forms'>";
     $content .= "<form action='' method='post' id='couponSelectionForm'>";
     $content .= "<h3> 1 - Choose <u>one</u> of the listed coupons:</h3>";
-    //list all global coupons 
-    foreach($coupons as $coupon)
-    {
-        $coupon_id = $coupon->ID;
-        array_push($coupon_ids, $coupon_id);
-        $coupon_name = $coupon->post_title;
-        $coupon_amount = $coupon->coupon_amount;
-        $coupon_description = $coupon->post_excerpt;
-        $coupon_type = "";
-        if($coupon->discount_type == "fixed_cart") $coupon_type = "Fixed Cart Discount";
-        else $coupon_type = "Percentage Discount";
-        
-        if($coupon_description == "")
-        {
-            if($coupon_type == "Percentage Discount") $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . $coupon_amount . "%</td><td>Not Defined</td></tr>";
-            else $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . get_woocommerce_currency_symbol() . $coupon_amount . "</td><td>Not Defined</td></tr>";
-        }
-        else
-        {
-            if($coupon_type == "Percentage Discount") $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . $coupon_amount . "%</td><td>$coupon_description</td></tr>";
-            else $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . get_woocommerce_currency_symbol() . $coupon_amount . "</td><td>$coupon_description</td></tr>";
-        }
-    }
+	//list all global coupons 
+	foreach($coupons as $coupon)
+	{
+		$coupon_id = $coupon->ID;
+		array_push($coupon_ids, $coupon_id);
+		$coupon_name = $coupon->post_title;
+		$coupon_amount = $coupon->coupon_amount;
+		$coupon_description = $coupon->post_excerpt;
+		$coupon_type = "";
+		if($coupon->discount_type == "fixed_cart") $coupon_type = "Fixed Cart Discount";
+		else $coupon_type = "Percentage Discount";
+		
+		if($coupon_description == "")
+		{
+			if($coupon_type == "Percentage Discount") $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . $coupon_amount . "%</td><td>Not Defined</td></tr>";
+			else $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . get_woocommerce_currency_symbol() . $coupon_amount . "</td><td>Not Defined</td></tr>";
+		}
+		else
+		{
+			if($coupon_type == "Percentage Discount") $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . $coupon_amount . "%</td><td>$coupon_description</td></tr>";
+			else $content .= "<tr><td style='width:10%'><input type='radio' name='sameRadio' value='$coupon_id'></td><td>". $coupon_name . " </td> " . "<td> ". $coupon_type . " </td> " . "<td> " . get_woocommerce_currency_symbol() . $coupon_amount . "</td><td>$coupon_description</td></tr>";
+		}
+	}
     $content .= "</table>";
     $content .= "<h3> 2 - Choose <u>one</u> of the listed restrictions:</h3>";
     $content .= "<table id='admins'>";
