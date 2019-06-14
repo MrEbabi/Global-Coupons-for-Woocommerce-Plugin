@@ -25,36 +25,39 @@ You may also check the old versions from: https://wordpress.org/plugins/global-c
 
 Version 1.0.0:
 
-Security maintenance: Securing inputs and outputs, providing unique function names, checking permissions and using nonces.
-Plugin is reviewed by the WordPress Plugin Review Team and now published on Wordpress Plugins.
+- Security maintenance: Securing inputs and outputs, providing unique function names, checking permissions and using nonces.
+- Plugin is reviewed by the WordPress Plugin Review Team and now published on Wordpress Plugins.
 
 Version 1.0.1:
 
-Requirements: To install and activate the Global Coupons for Woocommerce, first you need to install and activate the WooCommerce plugin.
-Editions: README is updated as mentioned in Changelog.
+- Requirements: To install and activate the Global Coupons for Woocommerce, first you need to install and activate the WooCommerce plugin.
+- README and Requirements are updated.
 
 Version 1.1.0:
 
-List the global coupons and count the activate coupons for users.
-Show the orders which any global coupons are used in by listing with the relevant coupon code.
+- List the global coupons and count the activate coupons for users.
+- Show the orders which any global coupons are used in by listing with the relevant coupon code.
 
 Version 1.1.1 and 1.1.2:
 
-Small bug fixes.
-README and Description is updated for more detail.
+- Small bug fixes.
+- README and Description is updated for more detail.
 
 Version 1.1.3:
 
-Despite any used global coupon cannot be used again by same user, it shows Active. This bug is solved now.
+- Despite any used global coupon cannot be used again by same user, it shows Active. This bug is solved now.
 
 Version 1.2.0:
 
-Admin Settings section is added to provide translation/customization of strings in user-side.
-Small bug fixes.
-Responsive problem of coupon table in my account is solved.
-Table background color and text color of table header can be changed from settings now.
+- Admin Settings section is added to provide translation/customization of strings in user-side.
+- Small bug fixes.
+- Responsive problem of coupon table in my account is solved.
+- Table background color and text color of table header can be changed from settings now.
 
+Version 1.2.1:
 
+- If no Global Coupons are defined, then show a notification in Global Coupons page (admin-side), Preview page (admin-side) and My Account - Coupons page (user-side).
+- Small bug fixes.
 -----
 
 To-Do: 
