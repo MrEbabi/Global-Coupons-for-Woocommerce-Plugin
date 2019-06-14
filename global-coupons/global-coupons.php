@@ -2,7 +2,7 @@
 /*
 Plugin Name: Global Coupons for Woocommerce
 Description: Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.
-Version: 1.2.0
+Version: 1.2.1
 Author: Mr.Ebabi
 Author URI: https://github.com/MrEbabi
 License: GPL2
@@ -65,7 +65,7 @@ function global_coupons_settings_link( $links )
 //css for admin panel
 function global_coupons_admin_css() 
 {
-    wp_register_style('global-coupons-admin', plugins_url('css/global-coupons.css',__FILE__ ));
+	wp_register_style('global-coupons-admin', plugins_url('css/global-coupons.css',__FILE__ ), array(), rand(111,9999), 'all');
     wp_enqueue_style('global-coupons-admin');
 }
 
@@ -78,7 +78,6 @@ function global_coupons_user_css()
 }
 
 add_action('wp_enqueue_scripts','global_coupons_user_css');
-
 
 if(!class_exists('GlobalCoupons'))
 {
@@ -93,7 +92,6 @@ if(!class_exists('GlobalCoupons'))
             require_once(dirname(__FILE__) . '/core/global-coupon-admin.php');
             require_once(dirname(__FILE__) . '/core/global-coupon-my-account.php');
             require_once(dirname(__FILE__) . '/core/global-coupon-reports.php');
-            global_coupons_default_settings();
         }
     }
 }
