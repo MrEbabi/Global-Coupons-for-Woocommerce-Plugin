@@ -8,15 +8,15 @@ Planned restrictions: First Order, Required Number of Orders, Required Amount of
 
 Usage: 
 
--Download the zipped file (global-coupons-for-woocommerce.1.1.0.zip) and upload it to wp-content/plugins using FTP or using Admin Panel -> Plugins -> Add New -> Upload Plugin, then extract there. 
+- Download the zipped file (global-coupons-for-woocommerce.1.1.0.zip) and upload it to wp-content/plugins using FTP or using Admin Panel -> Plugins -> Add New -> Upload Plugin, then extract there. 
 
 or
 
--Download: https://wordpress.org/plugins/global-coupons-for-woocommerce/ 
+- Download: https://wordpress.org/plugins/global-coupons-for-woocommerce/ 
 
 or
 
--Wordpress Admin Panel -> Plugins -> Add New -> Search -> "Global Coupons for Woocommerce" -> Install -> Activate
+- Wordpress Admin Panel -> Plugins -> Add New -> Search -> "Global Coupons for Woocommerce" -> Install -> Activate
 
 
 You may also check the old versions from: https://wordpress.org/plugins/global-coupons-for-woocommerce/advanced/
