@@ -62,3 +62,5 @@ Version 1.2.1:
 
 To-Do: 
 - A video tutorial for example usage.
+- Option to change my account tab names.
+- Option to set "No Global Coupons found" message.
