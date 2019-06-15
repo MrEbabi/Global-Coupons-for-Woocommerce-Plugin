@@ -1,4 +1,4 @@
-# Woocommerce-Global-Coupons
+# Woocommerce Global Coupons Plugin
 
 A custom plugin development to generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.
 
