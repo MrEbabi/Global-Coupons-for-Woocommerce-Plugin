@@ -5,6 +5,7 @@ add_action( 'admin_menu', 'global_coupons_admin_page' );
 
 //adding options
 global_coupons_default_settings();
+global_coupons_menu_tab_names();
 
 //admin menu function
 function global_coupons_admin_page() {
@@ -300,6 +301,14 @@ function global_coupons_admin_submenu_3()
 function global_coupons_admin_submenu_4()
 {
     $frontend_settings = get_option('global_coupons');
+    $menutab_settings = get_option('global_coupons_menu');
+    
+    $inputDashboard = $menutab_settings['dashboard_1'];
+    $inputCoupons = $menutab_settings['coupons_2'];
+    $inputOrders = $menutab_settings['orders_3'];
+    $inputAddresses = $menutab_settings['address_4'];
+    $inputAccount = $menutab_settings['account_5'];
+    $inputLogout = $menutab_settings['logout_6'];
     
     $inputForCode = $frontend_settings['coupon_code'];
     $inputForType = $frontend_settings['coupon_type'];
@@ -320,7 +329,8 @@ function global_coupons_admin_submenu_4()
     $inputForSpecial = $frontend_settings['special_for_you'];
     $inputForReviews = $frontend_settings['number_of_reviews'];
     $inputForDates = $frontend_settings['date_interval'];
-
+    $inputForNoCoupon = $frontend_settings['no_coupons_found'];
+    
     $content .= "<h1>Settings</h1>";
     $content .= "<div class='settingsfirst'>";
     $content .= "<table id='settings'>";
@@ -381,6 +391,7 @@ function global_coupons_admin_submenu_4()
                 'special_for_you'   =>  $inputForSpecial,
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
+                'no_coupons_found' =>  $inputForNoCoupon,
                 );
             
             update_option('global_coupons', $newOptions);
@@ -404,13 +415,13 @@ function global_coupons_admin_submenu_4()
     $content .= "<table id='settings'>";
     $content .= "<h3><center>Your Customization</center></h3>";
     $content .= "<form action='' method='post' id='submitSettingsSecForm'>";
-    $content .= "<tr><th><input type='text' name='fixedCartInput' placeholder='".$inputForFixed."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='percentageInput' placeholder='".$inputForPerc."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='activeInput' placeholder='".$inputForAct."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='deactiveInput' placeholder='".$inputForDeact."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='emptyInput' placeholder='".$inputForEmpty."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='thBgInput' placeholder='".$inputForThBg."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='textInput' placeholder='".$inputForText."'></th></tr></table>";
+    $content .= "<tr><th><input type='text' name='fixedCartInput' placeholder='".esc_html($inputForFixed)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='percentageInput' placeholder='".esc_html($inputForPerc)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='activeInput' placeholder='".esc_html($inputForAct)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='deactiveInput' placeholder='".esc_html($inputForDeact)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='emptyInput' placeholder='".esc_html($inputForEmpty)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='thBgInput' placeholder='".esc_html($inputForThBg)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='textInput' placeholder='".esc_html($inputForText)."'></th></tr></table>";
     
     $content .= wp_nonce_field('save_settings_sec_form', 'nonce_of_saveSettingsSecForm');
     $content .= "<br><center><button class='de-button-admin de-button-anim-4' type='submit' name='getSecSettings' id='submitSettingsSecForm'>Save</button>";
@@ -450,6 +461,7 @@ function global_coupons_admin_submenu_4()
                 'special_for_you'   =>  $inputForSpecial,
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
+                'no_coupons_found' =>  $inputForNoCoupon,
                 );
             
             update_option('global_coupons', $newOptions);
@@ -476,10 +488,21 @@ function global_coupons_admin_submenu_4()
                 'amount_of_orders'  =>  'Total amount of orders',
                 'special_for_you'   =>  'Special Discount For You',
                 'number_of_reviews' =>  'Required number of reviews',
-                'date_interval' =>  'Available Between'
+                'date_interval' =>  'Available Between',
+                'no_coupons_found' =>  'No Global Coupons Found',
+                );
+                
+            $defaultOptions2 = array(
+                'dashboard_1'   =>  __( 'Dashboard', 'woocommerce' ),
+                'coupons_2' =>  __( 'Coupons', 'woocommerce' ),
+                'orders_3'  =>  __( 'Orders', 'woocommerce' ),
+                'address_4' =>  __( 'Addresses', 'woocommerce' ),
+                'account_5' =>  __( 'Account Details', 'woocommerce' ),
+                'logout_6'  =>  __( 'Logout', 'woocommerce' ),
                 );
             
             update_option('global_coupons', $defaultOptions);
+            update_option('global_coupons_menu', $defaultOptions2);
             header("Refresh:0");
         }
     }
@@ -493,18 +516,20 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th>Special Discount For You</th></tr>";
     $content .= "<tr><th>Required number of reviews</th></tr>";
     $content .= "<tr><th>Available Between</th></tr>";
+    $content .= "<tr><th>No Global Coupons Found</th></tr>";
     $content .= "</table></div>";
     
     $content .= "<div class='settingssecond'>";
     $content .= "<table id='settings'>";
     $content .= "<h3><center>Your Customization</center></h3>";
     $content .= "<form action='' method='post' id='submitSettingsThirdForm'>";
-    $content .= "<tr><th><input type='text' name='firstOrderInput' placeholder='".$inputForFirst."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='numberOrdersInput' placeholder='".$inputForNumberOrders."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='amountOrdersInput' placeholder='".$inputForAmountOrders."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='specialForYouInput' placeholder='".$inputForSpecial."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='reviewInput' placeholder='".$inputForReviews."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='datesInput' placeholder='".$inputForDates."'></th></tr></table>";
+    $content .= "<tr><th><input type='text' name='firstOrderInput' placeholder='".esc_html($inputForFirst)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='numberOrdersInput' placeholder='".esc_html($inputForNumberOrders)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='amountOrdersInput' placeholder='".esc_html($inputForAmountOrders)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='specialForYouInput' placeholder='".esc_html($inputForSpecial)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='reviewInput' placeholder='".esc_html($inputForReviews)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='datesInput' placeholder='".esc_html($inputForDates)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='noCouponInput' placeholder='".esc_html($inputForNoCoupon)."'></th></tr></table>";
     
     $content .= wp_nonce_field('save_settings_third_form', 'nonce_of_saveSettingsThirdForm');
     $content .= "<br><center><button class='de-button-admin de-button-anim-4' type='submit' name='getThirdSettings' id='submitSettingsThirdForm'>Save</button></form></div>";
@@ -519,7 +544,7 @@ function global_coupons_admin_submenu_4()
             if( isset($_POST['specialForYouInput']) && !empty($_POST['specialForYouInput']) ) $inputForSpecial = sanitize_text_field($_POST['specialForYouInput']);
             if( isset($_POST['reviewInput']) && !empty($_POST['reviewInput']) ) $inputForReviews = sanitize_text_field($_POST['reviewInput']);
             if( isset($_POST['datesInput']) && !empty($_POST['datesInput']) ) $inputForDates = sanitize_text_field($_POST['datesInput']);
-            
+            if( isset($_POST['noCouponInput']) && !empty($_POST['noCouponInput']) ) $inputForNoCoupon = sanitize_text_field($_POST['noCouponInput']);
             
             $newOptions = array(
                 'coupon_code'   =>  $inputForCode,
@@ -541,9 +566,63 @@ function global_coupons_admin_submenu_4()
                 'special_for_you'   =>  $inputForSpecial,
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
+                'no_coupons_found' =>  $inputForNoCoupon,
                 );
             
             update_option('global_coupons', $newOptions);
+            header("Refresh:0");
+        }
+    }
+    
+    $content .= "<div class='vertical-line'></div>";
+    
+    $content .= "<div class='settingssecond'>";
+    $content .= "<table id='settings'>";
+    $content .= "<h3><center>Default Text</center></h3>";
+    $content .= "<tr><th>Dashboard</th></tr>";
+    $content .= "<tr><th>Coupons</th></tr>";
+    $content .= "<tr><th>Orders</th></tr>";
+    $content .= "<tr><th>Addresses</th></tr>";
+    $content .= "<tr><th>Account Details</th></tr>";
+    $content .= "<tr><th>Logout</th></tr>";
+    
+    $content .= "</table></div>";
+    
+    $content .= "<div class='settingssecond'>";
+    $content .= "<table id='settings'>";
+    $content .= "<h3><center>Your Customization</center></h3>";
+    $content .= "<form action='' method='post' id='submitSettingsFourthForm'>";
+    $content .= "<tr><th><input type='text' name='dashboardInput' placeholder='".esc_html($inputDashboard)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='couponsInput' placeholder='".esc_html($inputCoupons)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='ordersInput' placeholder='".esc_html($inputOrders)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='addressesInput' placeholder='".esc_html($inputAddresses)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='accountInput' placeholder='".esc_html($inputAccount)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='logoutInput' placeholder='".esc_html($inputLogout)."'></th></tr></table>";
+    
+    $content .= wp_nonce_field('save_settings_fourth_form', 'nonce_of_saveSettingsFourthForm');
+    $content .= "<br><center><button class='de-button-admin de-button-anim-4' type='submit' name='getFourthSettings' id='submitSettingsFourthForm'>Save</button></form></div>";
+    
+    if(wp_verify_nonce($_POST['nonce_of_saveSettingsFourthForm'], 'save_settings_fourth_form'))
+    {
+        if( isset($_POST['getFourthSettings'] ))
+        {
+            if( isset($_POST['dashboardInput']) && !empty($_POST['dashboardInput']) ) $inputDashboard = sanitize_text_field($_POST['dashboardInput']);
+            if( isset($_POST['couponsInput']) && !empty($_POST['couponsInput']) ) $inputCoupons = sanitize_text_field($_POST['couponsInput']);
+            if( isset($_POST['ordersInput']) && !empty($_POST['ordersInput']) ) $inputOrders = sanitize_text_field($_POST['ordersInput']);
+            if( isset($_POST['addressesInput']) && !empty($_POST['addressesInput']) ) $inputAddresses = sanitize_text_field($_POST['addressesInput']);
+            if( isset($_POST['accountInput']) && !empty($_POST['accountInput']) ) $inputAccount = sanitize_text_field($_POST['accountInput']);
+            if( isset($_POST['logoutInput']) && !empty($_POST['logoutInput']) ) $inputLogout = sanitize_text_field($_POST['logoutInput']);
+            
+            $newOptions = array(
+                'dashboard_1'   =>  $inputDashboard,
+                'coupons_2' =>  $inputCoupons,
+                'orders_3'  =>  $inputOrders,
+                'address_4' =>  $inputAddresses,
+                'account_5' =>  $inputAccount,
+                'logout_6'  =>  $inputLogout,
+                );
+            
+            update_option('global_coupons_menu', $newOptions);
             header("Refresh:0");
         }
     }
