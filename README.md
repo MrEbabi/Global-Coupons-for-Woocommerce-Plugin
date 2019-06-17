@@ -58,6 +58,12 @@ Version 1.2.1:
 
 - If no Global Coupons are defined, then show a notification in Global Coupons page (admin-side), Preview page (admin-side) and My Account - Coupons page (user-side).
 - Small bug fixes.
+
+Version 1.2.2:
+- Setting field for translating the "No Global Coupons Found" string text.
+- My Account tabs issue about translation is solved and settings fields are added for tab names.
+- Currency symbol is added to relevant global coupon conditions.
+
 -----
 
 To-Do: 
