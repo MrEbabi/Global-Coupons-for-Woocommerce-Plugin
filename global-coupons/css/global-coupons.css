@@ -45,11 +45,12 @@
     }
     
     .vertical-line {
-      border-left: 6px solid green;
-      height: 500px;
+      border-left: 1px solid green;
+      height: 400px;
       float: left;
-      margin-left: 5%;
-      margin-right: 2%;
+      margin-left: 4%;
+      margin-right: 1%;
+      margin-top: 5%;
     }
     
     div.reports-active {
@@ -75,7 +76,7 @@
     
     div.settingsfirst {
         margin-top: 2%;
-        margin-left: 2%;
+        margin-left: 1%;
         width: 10%;
         float: left;
     }
