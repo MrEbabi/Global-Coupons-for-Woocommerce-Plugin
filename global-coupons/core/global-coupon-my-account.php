@@ -77,7 +77,7 @@ function global_coupons_my_account_page() {
             {
                 $requiredAmountOfOrders = substr($coupon_description, 24);
                 global_coupons_amount_of_orders($coupon_id, $requiredAmountOfOrders);
-                $coupon_condition = $frontend_settings['amount_of_orders'] . ": " . $requiredAmountOfOrders;
+                $coupon_condition = $frontend_settings['amount_of_orders'] . ": " . get_woocommerce_currency_symbol() . $requiredAmountOfOrders;
                 
                 //add currency symbol to the start of coupon description without changing the original excerpt
                 $coupon_description = "Total amount of orders: " . get_woocommerce_currency_symbol() . $requiredAmountOfOrders ;
@@ -125,7 +125,7 @@ function global_coupons_my_account_page() {
     }
     else
     {
-        $content = "<center>No Global Coupons found.</center>";
+        $content = "<center>".esc_html($frontend_settings['no_coupons_found'])."</center>";
         return $content;
     }
 }
@@ -170,13 +170,15 @@ add_action( 'woocommerce_account_my-global-coupons_endpoint', 'global_coupons_ta
 
 //my account page re-order tabs
 function global_coupons_my_account_menu_order() {
+    global_coupons_menu_tab_names();
+    $menu_names = get_option("global_coupons_menu");
  	$menuOrder = array(
- 	    'dashboard'          => __( 'Dashboard', 'woocommerce' ),
- 	    'my-global-coupons' => __( 'Coupons', 'woocommerce' ),
- 		'orders'             => __( 'Orders', 'woocommerce' ),
- 		'edit-address'       => __( 'Addresses', 'woocommerce' ),
- 		'edit-account'    	=> __( 'Account Details', 'woocommerce' ),
- 		'customer-logout'    => __( 'Logout', 'woocommerce' ),
+ 	    'dashboard'          => $menu_names['dashboard_1'],
+ 	    'my-global-coupons' => $menu_names['coupons_2'],
+ 		'orders'             => $menu_names['orders_3'],
+ 		'edit-address'       => $menu_names['address_4'],
+ 		'edit-account'    	=> $menu_names['account_5'],
+ 		'customer-logout'    => $menu_names['logout_6'],
  	);
  	return $menuOrder;
  }
