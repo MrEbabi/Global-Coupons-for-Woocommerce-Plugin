@@ -29,6 +29,26 @@ function global_coupons_default_settings()
     'special_for_you'   =>  'Special Discount For You',
     'number_of_reviews' =>  'Required number of reviews',
     'date_interval' =>  'Available Between',
+    'no_coupons_found' =>  'No Global Coupons Found',
+    ));
+}
+
+//function for settings page to edit my account tab names
+function global_coupons_menu_tab_names()
+{
+    //check if options are created
+    $isCreated = get_option('global_coupons_menu');
+    
+    if($isCreated) return;
+    
+    //if not, add options
+    add_option('global_coupons_menu', array(
+    'dashboard_1'   =>  __( 'Dashboard', 'woocommerce' ),
+    'coupons_2' =>  __( 'Coupons', 'woocommerce' ),
+    'orders_3'  =>  __( 'Orders', 'woocommerce' ),
+    'address_4' =>  __( 'Addresses', 'woocommerce' ),
+    'account_5' =>  __( 'Account Details', 'woocommerce' ),
+    'logout_6'  =>  __( 'Logout', 'woocommerce' ),
     ));
 }
 
