@@ -1,10 +1,10 @@
 # Woocommerce Global Coupons Plugin
 
-A custom plugin development to generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.
+Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.
 
-Planned structure: Global Coupons - Coupon Operations - Preview - Reports
+General structure: Global Coupons - Coupon Operations - Preview - Reports - Settings
 
-Planned restrictions: First Order, Required Number of Orders, Required Amount of Orders, Special For You, Required Number of Reviews, Activate Date Interval
+Current restrictions: First Order, Required Number of Orders, Required Amount of Orders, Special For You, Required Number of Reviews, Activate Date Interval
 
 Usage: 
 
@@ -68,5 +68,6 @@ Version 1.2.2:
 
 To-Do: 
 - A video tutorial for example usage.
-- Option to change my account tab names.
-- Option to set "No Global Coupons found" message.
+- New Feature: "Accumulation" part for showing the current situation of users depending on the condition of coupon
+- New Restriction: At Least X Years Membership
+- New Restriction: Birthday
