@@ -4,7 +4,7 @@ Author URI: https://github.com/MrEbabi
 Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
 Tested up to: 5.2.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons-for-woocommerce
@@ -85,7 +85,9 @@ Be aware that, the Active/Deactive part is depending on the user account - in th
 
 **---Settings Section---**
 
-You can customize the all text fields, background color and text color in the table header to provide better view for your customers.
+1. Customize/Translate user-side text fields
+2. Customize/Translate My Account Tab Names
+3. Customize Table Header Color and Text Color
 
 **To ask new properties or report bugs, kindly inform globalcoupons@mrebabi.com**
 
@@ -120,6 +122,11 @@ Since your need may become a need for someone else in future, of course, we will
 9. Applied Global Coupon to cart (user side)
 
 == Changelog ==
+**=1.2.2=**
+-Setting field for translating the "No Global Coupons Found" string text.
+-My Account tabs issue about translation is solved and settings fields are added for tab names.
+-Currency symbol is added to relevant global coupon conditions.
+
 **=1.2.1=**
 -If no Global Coupons are defined, then show a notification in Global Coupons page (admin-side), Preview page (admin-side) and My Account - Coupons page (user-side).
 -Small bug fixes.
