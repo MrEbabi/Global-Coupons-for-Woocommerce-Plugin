@@ -68,6 +68,7 @@ Version 1.2.2:
 
 To-Do: 
 - A video tutorial for example usage.
+- Live Preview Link
 - New Feature: "Accumulation" part for showing the current situation of users depending on the condition of coupon
 - New Restriction: At Least X Years Membership
 - New Restriction: Birthday
