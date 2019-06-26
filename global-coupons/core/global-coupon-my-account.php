@@ -3,9 +3,9 @@
 //user side - my account coupons page
 function global_coupons_my_account_page() {
     $anyGC = global_coupons_count_all_global_coupons();
+    $frontend_settings = get_option('global_coupons');
     if($anyGC > 0)
     {
-        $frontend_settings = get_option('global_coupons');
         $coupons = global_coupons_get_all_global_coupons();
         $content = "<table id='customers'>";
         $content .= "<tr style='background-color:".$frontend_settings['th_bg']."; color:".$frontend_settings['th_text']."'><th>".$frontend_settings['coupon_code']."</th><th>".$frontend_settings['coupon_type']."</th><th>".$frontend_settings['coupon_amount']."</th><th>".$frontend_settings['coupon_restriction']."</th><th>".$frontend_settings['coupon_status']."</th><th>".$frontend_settings['coupon_apply']."</th><th>".$frontend_settings['you_have']."</th></tr>";
