@@ -8,7 +8,7 @@ function global_coupons_my_account_page() {
         $frontend_settings = get_option('global_coupons');
         $coupons = global_coupons_get_all_global_coupons();
         $content = "<table id='customers'>";
-        $content .= "<tr style='background-color:".$frontend_settings['th_bg']."; color:".$frontend_settings['th_text']."'><th>".$frontend_settings['coupon_code']."</th><th>".$frontend_settings['coupon_type']."</th><th>".$frontend_settings['coupon_amount']."</th><th>".$frontend_settings['coupon_restriction']."</th><th>".$frontend_settings['coupon_status']."</th><th>".$frontend_settings['coupon_apply']."</th></tr>";
+        $content .= "<tr style='background-color:".$frontend_settings['th_bg']."; color:".$frontend_settings['th_text']."'><th>".$frontend_settings['coupon_code']."</th><th>".$frontend_settings['coupon_type']."</th><th>".$frontend_settings['coupon_amount']."</th><th>".$frontend_settings['coupon_restriction']."</th><th>".$frontend_settings['coupon_status']."</th><th>".$frontend_settings['coupon_apply']."</th><th>".$frontend_settings['you_have']."</th></tr>";
         foreach($coupons as $coupon)
         {
             $coupon_id = $coupon->ID;
@@ -17,6 +17,10 @@ function global_coupons_my_account_page() {
             $coupon_description = $coupon->post_excerpt;
             $coupon_type = "";
             $coupon_condition = "";
+            $coupon_condition_for_user = " - ";
+            $coupon_activeness = "";
+            $color_activeness = "";
+            
             if($coupon->discount_type == "fixed_cart") $coupon_type = "Fixed Cart Discount";
             else $coupon_type = "Percentage Discount";
             
@@ -51,6 +55,8 @@ function global_coupons_my_account_page() {
             {
                 global_coupons_first_order($coupon_id);
                 $coupon_condition = $frontend_settings['first_order'];
+                $count = global_coupons_get_number_of_orders();
+                $coupon_condition_for_user = $frontend_settings['currently_orders']. ": " .$count;
             }
             elseif($coupon_description != "" && strpos($coupon_description, 'At least') !== false)
             {
@@ -59,6 +65,8 @@ function global_coupons_my_account_page() {
                 $howMany = intval($strArray[0]); 
                 global_coupons_necessary_reviews($coupon_id, $howMany ); 
                 $coupon_condition = $frontend_settings['number_of_reviews'] . ": " . $howMany;
+                $count = global_coupons_get_number_of_reviews();
+                $coupon_condition_for_user = $frontend_settings['currently_reviews']. ": " .$count;
             }
             elseif($coupon_description != "" && strpos($coupon_description, 'Available: ') !== false)
             {
@@ -72,15 +80,23 @@ function global_coupons_my_account_page() {
                 $requiredNumberOfOrders = substr($coupon_description, 27);
                 global_coupons_number_of_orders($coupon_id, $requiredNumberOfOrders);
                 $coupon_condition = $frontend_settings['number_of_orders'] . ": " . $requiredNumberOfOrders;
+                $count = global_coupons_get_number_of_orders();
+                $coupon_condition_for_user = $frontend_settings['currently_orders']. ": " .$count;
             }
             elseif($coupon_description != "" && strpos($coupon_description, 'Total amount of orders: ') !== false)
             {
                 $requiredAmountOfOrders = substr($coupon_description, 24);
                 global_coupons_amount_of_orders($coupon_id, $requiredAmountOfOrders);
                 $coupon_condition = $frontend_settings['amount_of_orders'] . ": " . get_woocommerce_currency_symbol() . $requiredAmountOfOrders;
+                $count = global_coupons_get_amount_of_orders();
+                $coupon_condition_for_user = $frontend_settings['currently_amount']. ": " .get_woocommerce_currency_symbol() . $count;
                 
                 //add currency symbol to the start of coupon description without changing the original excerpt
                 $coupon_description = "Total amount of orders: " . get_woocommerce_currency_symbol() . $requiredAmountOfOrders ;
+            }
+            elseif($coupon_description != "" && strpos($coupon_description, 'Special Discount For You') !== false)
+            {
+                $coupon_condition = "Special Discount For You";
             }
             
             //check activeness for this specific user
@@ -94,14 +110,32 @@ function global_coupons_my_account_page() {
                 if(in_array( $customer_email , $coupon->customer_email ) && ( !global_coupons_get_customer_used($coupon) )) 
                 {
                     $isActive = true;
+                    $coupon_activeness = $frontend_settings['active'];
+                    $color_activeness = "green";
                 }
+                elseif(global_coupons_get_customer_used($coupon))
+                {
+                    $coupon_activeness = $frontend_settings['used'];
+                    $color_activeness = "blue";
+                }
+                else
+                {
+                    $coupon_activeness = $frontend_settings['deactive'];
+                    $color_activeness = "red";
+                }
+            }
+            elseif(strpos($coupon_description, 'Available: ') !== false)
+            {
+                $isActive = true;
+                $coupon_activeness = $frontend_settings['active'];
+                $color_activeness = "green";
             }
             if($coupon_description!="" || current_user_can('administrator'))
             {
                 if($isActive)
                 {
-                    if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['percentage']) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td>" . "<td> " . esc_html($coupon_condition) ."</td>" . "<td style='color:green'>".$frontend_settings['active']."</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td>";
-                    else $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['fixed_cart']) . " </td> " . "<td>" . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_condition) ."</td>" . "<td style='color:green'>".$frontend_settings['active']."</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td>"; 
+                    if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['percentage']) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td>" . "<td> " . esc_html($coupon_condition) ."</td>" . "<td style='color:".esc_html($color_activeness)."'>".esc_html($coupon_activeness)."</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td><td>".esc_html($coupon_condition_for_user)."</td></tr>";
+                    else $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['fixed_cart']) . " </td> " . "<td>" . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_condition) ."</td>" . "<td style='color:".esc_html($color_activeness)."'>".esc_html($coupon_activeness)."</td><td><form action='' method='post'><button class='de-button de-button-anim-1' type='submit' value='".esc_html($coupon_apply_text)."' name='appliedCoupon'>".esc_html($coupon_apply_text)."</button></form></td><td>".esc_html($coupon_condition_for_user)."</td></tr>"; 
                     if($_SERVER['REQUEST_METHOD'] === 'POST' && $coupon_apply_text != "preview" && $coupon_apply_text != $frontend_settings['empty_cart'])
                     {
                         $applyCode = $_POST['appliedCoupon'];
@@ -115,8 +149,9 @@ function global_coupons_my_account_page() {
                 }
                 elseif(!($coupon_description == 'Special Discount For You'))
                 {
-                    if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['percentage']) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td>" . "<td> " . esc_html($coupon_condition) . "</td>" . "<td style='color:red'>".$frontend_settings['deactive']."</td>";
-                    else $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['fixed_cart']) . " </td> " . "<td> " . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_condition) . "</td>" . "<td style='color:red'>".$frontend_settings['deactive']."</td>";
+                    $coupon_apply_text = "Disabled";
+                    if($coupon_type == "Percentage Discount") $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['percentage']) . " </td> " . "<td> " . esc_html($coupon_amount) . "%</td>" . "<td> " . esc_html($coupon_condition) . "</td>" . "<td style='color:".esc_html($color_activeness)."'>".esc_html($coupon_activeness)."</td><td><button class='de-button de-button-anim-11' type='submit' value='".esc_html($coupon_apply_text)."' name=''>".esc_html($coupon_apply_text)."</button></td><td>".esc_html($coupon_condition_for_user)."</td></tr>";
+                    else $content .= "<tr><td> ". esc_html($coupon_name) . " </td> " . "<td> ". esc_html($frontend_settings['fixed_cart']) . " </td> " . "<td> " . get_woocommerce_currency_symbol() . esc_html($coupon_amount) . "</td>" . "<td> " . esc_html($coupon_condition) . "</td>" . "<td style='color:".esc_html($color_activeness)."'>".esc_html($coupon_activeness)."</td><td><button class='de-button de-button-anim-11' type='submit' value='".esc_html($coupon_apply_text)."' name=''>".esc_html($coupon_apply_text)."</button></td><td>".esc_html($coupon_condition_for_user)."</td></tr>";
                 }
             }
         }
