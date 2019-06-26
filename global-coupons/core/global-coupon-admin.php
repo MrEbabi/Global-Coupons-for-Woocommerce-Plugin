@@ -320,6 +320,7 @@ function global_coupons_admin_submenu_4()
     $inputForPerc = $frontend_settings['percentage'];
     $inputForAct = $frontend_settings['active'];
     $inputForDeact = $frontend_settings['deactive'];
+    $inputForUsed = $frontend_settings['used'];
     $inputForEmpty = $frontend_settings['empty_cart'];
     $inputForText = $frontend_settings['th_text'];
     $inputForThBg = $frontend_settings['th_bg'];
@@ -330,6 +331,10 @@ function global_coupons_admin_submenu_4()
     $inputForReviews = $frontend_settings['number_of_reviews'];
     $inputForDates = $frontend_settings['date_interval'];
     $inputForNoCoupon = $frontend_settings['no_coupons_found'];
+    $inputForYouHave = $frontend_settings['you_have'];
+    $inputForCurrentlyOrders = $frontend_settings['currently_orders'];
+    $inputForCurrentlyReviews = $frontend_settings['currently_reviews'];
+    $inputForCurrentlyAmount = $frontend_settings['currently_amount'];
     
     $content .= "<h1>Settings</h1>";
     $content .= "<div class='settingsfirst'>";
@@ -341,6 +346,7 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th>Comment/Condition</th></tr>";
     $content .= "<tr><th>Status</th></tr>";
     $content .= "<tr><th>Apply Coupon</th></tr>";
+    $content .= "<tr><th>You Have</th></tr>";
     $content .= "</table></div>";
     
     $content .= "<div class='settingssecond'>";
@@ -353,6 +359,7 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th><input type='text' name='couponCommentInput' placeholder='".esc_html($inputForComment)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='couponStatusInput' placeholder='".esc_html($inputForStatus)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='couponApplyInput' placeholder='".esc_html($inputForApply)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='couponYouHaveInput' placeholder='".esc_html($inputForYouHave)."'></th></tr>";
     $content .= "</table>";    
     
     $content .= wp_nonce_field('save_settings_form', 'nonce_of_saveSettingsForm');
@@ -370,6 +377,7 @@ function global_coupons_admin_submenu_4()
             if( isset($_POST['couponCommentInput']) && !empty($_POST['couponCommentInput']) ) $inputForComment = sanitize_text_field($_POST['couponCommentInput']);
             if( isset($_POST['couponStatusInput']) && !empty($_POST['couponStatusInput']) ) $inputForStatus = sanitize_text_field($_POST['couponStatusInput']);
             if( isset($_POST['couponApplyInput']) && !empty($_POST['couponApplyInput']) ) $inputForApply = sanitize_text_field($_POST['couponApplyInput']);
+            if( isset($_POST['couponYouHaveInput']) && !empty($_POST['couponYouHaveInput']) ) $inputForYouHave = sanitize_text_field($_POST['couponYouHaveInput']);
             
             $newOptions = array(
                 'coupon_code'   =>  $inputForCode,
@@ -382,6 +390,7 @@ function global_coupons_admin_submenu_4()
                 'percentage'    =>  $inputForPerc,
                 'active'    =>  $inputForAct,
                 'deactive'  =>  $inputForDeact,
+                'used'  =>  $inputForUsed,
                 'empty_cart'    =>  $inputForEmpty,
                 'th_text'  =>  $inputForText,
                 'th_bg' =>  $inputForThBg,
@@ -392,6 +401,10 @@ function global_coupons_admin_submenu_4()
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
                 'no_coupons_found' =>  $inputForNoCoupon,
+                'you_have'  =>  $inputForYouHave,
+                'currently_orders'  =>  $inputForCurrentlyOrders,
+                'currently_reviews' =>  $inputForCurrentlyReviews,
+                'currently_amount'  =>  $inputForCurrentlyAmount,
                 );
             
             update_option('global_coupons', $newOptions);
@@ -406,7 +419,11 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th>Percentage Discount</th></tr>";
     $content .= "<tr><th>Active</th></tr>";
     $content .= "<tr><th>Deactive</th></tr>";
+    $content .= "<tr><th>Used</th></tr>";
     $content .= "<tr><th>Empty Cart</th></tr>";
+    $content .= "<tr><th>Number of Orders</th></tr>";
+    $content .= "<tr><th>Number of Reviews</th></tr>";
+    $content .= "<tr><th>Amount of Orders</th></tr>";
     $content .= "<tr><th>Table Header Background Color</th></tr>";
     $content .= "<tr><th>Table Header Text Color</th></tr>";
     $content .= "</table></div>";
@@ -419,7 +436,11 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th><input type='text' name='percentageInput' placeholder='".esc_html($inputForPerc)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='activeInput' placeholder='".esc_html($inputForAct)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='deactiveInput' placeholder='".esc_html($inputForDeact)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='usedInput' placeholder='".esc_html($inputForUsed)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='emptyInput' placeholder='".esc_html($inputForEmpty)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='currentlyOrderInput' placeholder='".esc_html($inputForCurrentlyOrders)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='currentlyReviewInput' placeholder='".esc_html($inputForCurrentlyReviews)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='currentlyAmountInput' placeholder='".esc_html($inputForCurrentlyAmount)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='thBgInput' placeholder='".esc_html($inputForThBg)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='textInput' placeholder='".esc_html($inputForText)."'></th></tr></table>";
     
@@ -437,7 +458,11 @@ function global_coupons_admin_submenu_4()
             if( isset($_POST['percentageInput']) && !empty($_POST['percentageInput']) ) $inputForPerc = sanitize_text_field($_POST['percentageInput']);
             if( isset($_POST['activeInput']) && !empty($_POST['activeInput']) ) $inputForAct = sanitize_text_field($_POST['activeInput']);
             if( isset($_POST['deactiveInput']) && !empty($_POST['deactiveInput']) ) $inputForDeact = sanitize_text_field($_POST['deactiveInput']);
+            if( isset($_POST['usedInput']) && !empty($_POST['usedInput']) ) $inputForUsed = sanitize_text_field($_POST['usedInput']);
             if( isset($_POST['emptyInput']) && !empty($_POST['emptyInput']) ) $inputForEmpty = sanitize_text_field($_POST['emptyInput']);
+            if( isset($_POST['currentlyOrderInput']) && !empty($_POST['currentlyOrderInput']) ) $inputForCurrentlyOrders = sanitize_text_field($_POST['currentlyOrderInput']);
+            if( isset($_POST['currentlyReviewInput']) && !empty($_POST['currentlyReviewInput']) ) $inputForCurrentlyReviews = sanitize_text_field($_POST['currentlyReviewInput']);
+            if( isset($_POST['currentlyAmountInput']) && !empty($_POST['currentlyAmountInput']) ) $inputForCurrentlyAmount = sanitize_text_field($_POST['currentlyAmountInput']);
             if( isset($_POST['thBgInput']) && !empty($_POST['thBgInput']) ) $inputForThBg = sanitize_text_field($_POST['thBgInput']);
             if( isset($_POST['textInput']) && !empty($_POST['textInput']) ) $inputForText = sanitize_text_field($_POST['textInput']);
             
@@ -452,6 +477,7 @@ function global_coupons_admin_submenu_4()
                 'percentage'    =>  $inputForPerc,
                 'active'    =>  $inputForAct,
                 'deactive'  =>  $inputForDeact,
+                'used'  =>  $inputForUsed,
                 'empty_cart'    =>  $inputForEmpty,
                 'th_text'  =>  $inputForText,
                 'th_bg' =>  $inputForThBg,
@@ -462,6 +488,10 @@ function global_coupons_admin_submenu_4()
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
                 'no_coupons_found' =>  $inputForNoCoupon,
+                'you_have'  =>  $inputForYouHave,
+                'currently_orders'  =>  $inputForCurrentlyOrders,
+                'currently_reviews' =>  $inputForCurrentlyReviews,
+                'currently_amount'  =>  $inputForCurrentlyAmount,
                 );
             
             update_option('global_coupons', $newOptions);
@@ -490,6 +520,11 @@ function global_coupons_admin_submenu_4()
                 'number_of_reviews' =>  'Required number of reviews',
                 'date_interval' =>  'Available Between',
                 'no_coupons_found' =>  'No Global Coupons Found',
+                'you_have'  =>  'You Have',
+                'currently_orders'  =>  'Number of Orders',
+                'currently_reviews'  =>  'Number of Reviews',
+                'currently_amount'  =>  'Amount of Orders',
+                'used'  =>  'Used',
                 );
                 
             $defaultOptions2 = array(
@@ -557,6 +592,7 @@ function global_coupons_admin_submenu_4()
                 'percentage'    =>  $inputForPerc,
                 'active'    =>  $inputForAct,
                 'deactive'  =>  $inputForDeact,
+                'used'  =>  $inputForUsed,
                 'empty_cart'    =>  $inputForEmpty,
                 'th_text'  =>  $inputForText,
                 'th_bg' =>  $inputForThBg,
@@ -567,6 +603,10 @@ function global_coupons_admin_submenu_4()
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
                 'no_coupons_found' =>  $inputForNoCoupon,
+                'you_have'  =>  $inputForYouHave,
+                'currently_orders'  =>  $inputForCurrentlyOrders,
+                'currently_reviews' =>  $inputForCurrentlyReviews,
+                'currently_amount'  =>  $inputForCurrentlyAmount,
                 );
             
             update_option('global_coupons', $newOptions);
