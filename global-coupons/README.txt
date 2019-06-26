@@ -3,8 +3,8 @@ Contributors: mrebabi
 Author URI: https://github.com/MrEbabi
 Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
-Tested up to: 5.2.1
-Stable tag: 1.2.2
+Tested up to: 5.2.2
+Stable tag: 1.2.3
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons-for-woocommerce
@@ -12,6 +12,9 @@ Text Domain: global-coupons-for-woocommerce
 Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.
 
 == Description ==
+**Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.**
+
+
 * PUBLISH A WOOCOMMERCE COUPON ONLY ONCE AND LET THIS COUPON TO UPDATE ITSELF AUTOMATICALLY FOR EVERY CUSTOMER DEPENDING ON THE GLOBAL COUPON RESTRICTION
 
 
@@ -22,9 +25,6 @@ Generate availability-restricted WooCommerce coupons and let customers to see&us
 
 
 * SEE THE ORDERS THAT GLOBAL COUPONS ARE USED
-
-
-**Generate availability-restricted WooCommerce coupons and let customers to see&use coupons on My Account.**
 
 Global Coupons are customizated WooCommerce coupons which have several restriction options and regarding to those restrictions, the coupons are available for the customers. Customers can check the published Global Coupons on the My Account - Coupons part and see if a coupon is Active or Deactive. If a coupon is Active for customer, then customer can directly apply the coupon if their cart is not empty.
 
@@ -122,6 +122,15 @@ Since your need may become a need for someone else in future, of course, we will
 9. Applied Global Coupon to cart (user side)
 
 == Changelog ==
+**=1.2.3=**
+-New Feature: "You Have" part for showing the current situation of users depending on the condition of the global coupon.
+-Relevant setting fields for You Have part.
+-New Status: "Used".
+-New translation setting fields for active, deactive and used statuses of global coupons.
+-No Coupons Found message problem is fixed.
+-Available Date Interval feature problem is fixed.
+-Small css and bug fixes.
+
 **=1.2.2=**
 -Setting field for translating the "No Global Coupons Found" string text.
 -My Account tabs issue about translation is solved and settings fields are added for tab names.
