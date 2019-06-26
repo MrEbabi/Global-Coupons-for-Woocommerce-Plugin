@@ -20,6 +20,7 @@ function global_coupons_default_settings()
     'percentage'    =>  'Percentage Cart Discount',
     'active'    =>  'Active',
     'deactive'  =>  'Deactive',
+    'used'  =>  'Used',
     'empty_cart'    =>  'Empty Cart',
     'th_text'  =>  'white',
     'th_bg' =>  '#4CAF50',
@@ -30,6 +31,10 @@ function global_coupons_default_settings()
     'number_of_reviews' =>  'Required number of reviews',
     'date_interval' =>  'Available Between',
     'no_coupons_found' =>  'No Global Coupons Found',
+    'you_have'  =>  'You Have',
+    'currently_orders'  =>  'Number of Orders',
+    'currently_reviews'  =>  'Number of Reviews',
+    'currently_amount'  =>  'Amount of Orders',
     ));
 }
 
@@ -113,6 +118,62 @@ function global_coupons_get_all_products()
         );
     $products = get_posts( $args );
     return $products;
+}
+
+//function to count orders of a customer
+function global_coupons_get_number_of_orders()
+{
+    $this_customer_id = get_current_user_id();
+    $customer_orders = get_posts( array(
+        'numberposts' => -1,
+        'meta_key'    => '_customer_user',
+        'meta_value'  => $this_customer_id,
+        'post_type'   => wc_get_order_types(),
+        //only for on-hold, processing and completed orders
+        'post_status' => array('wc-on-hold','wc-processing','wc-completed'),
+    ) );
+    
+    $number_of_orders = count($customer_orders);
+    return $number_of_orders;
+}
+
+//function to count reviews of a customer
+function global_coupons_get_number_of_reviews()
+{
+    $this_customer_id = get_current_user_id();
+    $args = array(
+        'user_id' => $this_customer_id,
+    );
+    $comments = get_comments($args);
+    
+    $number_of_reviews = count($comments);
+    return $number_of_reviews;
+}
+
+//function to count amount of orders of a customer
+function global_coupons_get_amount_of_orders()
+{
+    $this_customer_id = get_current_user_id();
+    $customer_orders = get_posts( array(
+        'numberposts' => -1,
+        'meta_key'    => '_customer_user',
+        'meta_value'  => $this_customer_id,
+        'post_type'   => wc_get_order_types(),
+        //only for processing and completed orders
+        'post_status' => array('wc-processing','wc-completed'),
+    ) );
+    
+    //get amount of each order
+    $totalAmount = 0;
+    foreach($customer_orders as $customer_order)
+    {
+        $order_id = $customer_order->ID;
+        $customer_order = wc_get_order( $order_id );
+        $totalAmount += $customer_order->get_total();
+    }
+    
+    $amount_of_orders = $totalAmount;
+    return $amount_of_orders;
 }
 
 //function to get all users
