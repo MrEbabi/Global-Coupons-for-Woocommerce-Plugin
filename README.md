@@ -69,9 +69,8 @@ Version 1.2.3:
 - Relevant setting fields for You Have part.
 - New Status: "Used".
 - New translation setting fields for active, deactive and used statuses of global coupons.
-- No Coupons Found message problem is fixed.
-- Available Date Interval feature problem is fixed.
-- Small css and bug fixes.
+- No Coupons Found message showing bug is fixed.
+- Available Date Interval feature activeness bug is fixed.
 
 -----
 
