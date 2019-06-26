@@ -64,11 +64,19 @@ Version 1.2.2:
 - My Account tabs issue about translation is solved and settings fields are added for tab names.
 - Currency symbol is added to relevant global coupon conditions.
 
+Version 1.2.3:
+- New Feature: "You Have" part for showing the current situation of users depending on the condition of the global coupon.
+- Relevant setting fields for You Have part.
+- New Status: "Used".
+- New translation setting fields for active, deactive and used statuses of global coupons.
+- No Coupons Found message problem is fixed.
+- Available Date Interval feature problem is fixed.
+- Small css and bug fixes.
+
 -----
 
 To-Do: 
 - A video tutorial for example usage.
 - Live Preview Link
-- New Feature: "Accumulation" part for showing the current situation of users depending on the condition of coupon
 - New Restriction: At Least X Years Membership
 - New Restriction: Birthday
