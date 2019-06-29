@@ -4,7 +4,7 @@ Author URI: https://github.com/MrEbabi
 Tags: woocommerce, woocommerce coupons, woocommerce coupon, woocommerce coupon plugin, dynamic coupons, global coupons, global coupons for woocommerce, coupon plugin, extended coupons, coupon features
 Requires at least: 3.1
 Tested up to: 5.2.2
-Stable tag: 1.2.3
+Stable tag: 1.3.0
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: global-coupons-for-woocommerce
@@ -36,6 +36,7 @@ Global Coupons are customizated WooCommerce coupons which have several restricti
 * Special For You
 * Number of Reviews
 * Activate Date Interval
+* Years of Membership
 
 **---Global Coupons Section---**
 
@@ -58,6 +59,9 @@ This restriction is selected with #number, the chosen coupon will be activate fo
 
 **Activate Date Interval:**
 You may define a global coupon that will be activated between the X and Y dates. Example: 30.06.2035-25.12.2035, then customers will see this global coupon as deactive until the starting date. Regular Input: DD.MM.YYYY-DD.MM.YYYY
+
+**Years of Membership**
+This restriction is selected with #years, the chosen coupon will be activate for only the customers that have enough #years of membership. Example: 2 Years. If a customer has registered 3 years ago, customer will see this global coupon as active. Regular Input: Positive Integer
 
 **---Coupon Operations Section---**
 
@@ -122,6 +126,11 @@ Since your need may become a need for someone else in future, of course, we will
 9. Applied Global Coupon to cart (user side)
 
 == Changelog ==
+**=1.3.0=**
+-New Restriction: "Required Years of Membership" for global coupons.
+-Relevant setting fields for Years Of Membership restriction.
+-Additional CSS.
+
 **=1.2.3=**
 -New Feature: "You Have" part for showing the current situation of users depending on the condition of the global coupon.
 -Relevant setting fields for You Have part.
