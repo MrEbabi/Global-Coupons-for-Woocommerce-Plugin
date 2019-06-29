@@ -1074,6 +1074,16 @@
   100% {
     background-image: linear-gradient(40deg, #605C3C -200%, #3C3B3F 0%, #605C3C); } }
 
+#footer-upgrade
+{
+    display: none;
+}
+
+#footer-thankyou
+{
+    display: none;
+}
+
 .de-button-anim-3 {
   background-image: linear-gradient(40deg, #9b009b -200%, #54009b 0%, #9b009b);
   -webkit-animation: de-button-anim-3-out 0.2s linear;
