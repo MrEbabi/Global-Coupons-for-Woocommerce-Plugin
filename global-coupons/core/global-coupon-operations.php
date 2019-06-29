@@ -158,17 +158,17 @@ function global_coupons_number_of_orders($couponid, $number)
         {
             array_push($emails, $customer_email);
         }
-        
-        $excerpt_text = "Required number of orders: ";
-        $excerpt_text .= $number;
-        
-        update_post_meta( $couponid, 'customer_email', $emails );
-        $update_post = array(
-            'ID' => $couponid,
-            'post_excerpt' => $excerpt_text,
-            );
-        wp_update_post($update_post);
     }
+    
+    $excerpt_text = "Required number of orders: ";
+    $excerpt_text .= $number;
+    
+    update_post_meta( $couponid, 'customer_email', $emails );
+    $update_post = array(
+        'ID' => $couponid,
+        'post_excerpt' => $excerpt_text,
+        );
+    wp_update_post($update_post);
 }
 
 //required amount of orders
@@ -209,17 +209,71 @@ function global_coupons_amount_of_orders($couponid, $amount)
         {
             array_push($emails, $customer_email);
         }
-        
-        $excerpt_text = "Total amount of orders: ";
-        $excerpt_text .= $amount;
-        
-        update_post_meta( $couponid, 'customer_email', $emails );
-        $update_post = array(
-            'ID' => $couponid,
-            'post_excerpt' => $excerpt_text,
-            );
-        wp_update_post($update_post);
     }
+    
+    $excerpt_text = "Total amount of orders: ";
+    $excerpt_text .= $amount;
+    
+    update_post_meta( $couponid, 'customer_email', $emails );
+    $update_post = array(
+        'ID' => $couponid,
+        'post_excerpt' => $excerpt_text,
+        );
+    wp_update_post($update_post);
+}
+
+//required years of membership
+function global_coupons_years_of_membership($couponid, $years)
+{
+    $customers = global_coupons_get_all_users();
+    $emails = array();
+    
+    //traverse all users to see if they satisfy required years of membership
+    foreach($customers as $customer)
+    {
+        $difference = 0;
+        $this_customer_id = $customer->ID;
+        $user_info = get_userdata($this_customer_id);
+        $register_date = $user_info->user_registered;
+        $customer_email = $user_info->user_email;
+        
+        $register = date( "d m Y", strtotime( $register_date ) );
+        
+        $today = date( "d m Y" );
+        
+        $register_day = substr($register, 0, 2);
+        $register_mon = substr($register, 3, 2);
+        $register_year = substr($register, 6, 4);
+        
+        
+        $today_day = substr($today, 0, 2);
+        $today_mon = substr($today, 3, 2);
+        $today_year = substr($today, 6, 4);
+       
+        
+        if(( $register_mon < $today_mon ) || ( $register_mon == $today_mon && $register_day <= $today_day ) )
+        {
+           $difference = $today_year - $register_year;
+        }
+        else
+        {
+            $difference = $today_year - $register_year - 1;
+        }
+        if($difference >= $years)
+        {
+            array_push($emails, $customer_email);
+        }
+    }
+    
+    $excerpt_text = "Required years of membership: ";
+    $excerpt_text .= $years;
+    
+    update_post_meta( $couponid, 'customer_email', $emails );
+    $update_post = array(
+        'ID' => $couponid,
+        'post_excerpt' => $excerpt_text,
+        );
+    wp_update_post($update_post);
 }
 
 ?>
