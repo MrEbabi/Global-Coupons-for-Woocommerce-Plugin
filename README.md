@@ -4,7 +4,7 @@ Generate availability-restricted WooCommerce coupons and let customers to see&us
 
 General structure: Global Coupons - Coupon Operations - Preview - Reports - Settings
 
-Current restrictions: First Order, Required Number of Orders, Required Amount of Orders, Special For You, Required Number of Reviews, Activate Date Interval
+Current restrictions: First Order, Required Number of Orders, Required Amount of Orders, Special For You, Required Number of Reviews, Activate Date Interval, Years of Membership
 
 Usage: 
 
