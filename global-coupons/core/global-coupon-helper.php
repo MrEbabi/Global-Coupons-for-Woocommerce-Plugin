@@ -19,7 +19,7 @@ function global_coupons_default_settings()
     'fixed_cart'    =>  'Fixed Cart Discount',
     'percentage'    =>  'Percentage Cart Discount',
     'active'    =>  'Active',
-    'deactive'  =>  'Deactive',
+    'inactive'  =>  'Inactive',
     'used'  =>  'Used',
     'empty_cart'    =>  'Empty Cart',
     'th_text'  =>  'white',
@@ -30,11 +30,13 @@ function global_coupons_default_settings()
     'special_for_you'   =>  'Special Discount For You',
     'number_of_reviews' =>  'Required number of reviews',
     'date_interval' =>  'Available Between',
+    'years_of_membership' =>  'Required years of membership',
     'no_coupons_found' =>  'No Global Coupons Found',
     'you_have'  =>  'You Have',
     'currently_orders'  =>  'Number of Orders',
     'currently_reviews'  =>  'Number of Reviews',
     'currently_amount'  =>  'Amount of Orders',
+    'currently_years'   =>  'Years of Membership',
     ));
 }
 
