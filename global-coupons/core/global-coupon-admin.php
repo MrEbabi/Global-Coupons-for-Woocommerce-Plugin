@@ -59,7 +59,7 @@ function global_coupons_admin_mainmenu() {
     $content .= "</table>";
     $content .= "<h3> 2 - Choose <u>one</u> of the listed restrictions:</h3>";
     $content .= "<table id='admins'>";
-    $content .= "<th>First Order</th><th>Number of Orders</th><th>Amount of Orders</th><th>Special For You</th><th>Number of Reviews</th><th>Activate Date Interval</th>";
+    $content .= "<th>First Order</th><th>Number of Orders</th><th>Amount of Orders</th><th>Special For You</th><th>Number of Reviews</th><th>Activate Date Interval</th><th>Years of Membership</th>";
     
     //list the operations for the global coupons
     $content .= "<tr>";
@@ -69,6 +69,7 @@ function global_coupons_admin_mainmenu() {
     $content .= "<td><input style='width:100%' type=\"text\" name=\"specialEmails\" placeholder='ex1@test.com,ex2@test.com'></td>";
     $content .= "<td><input style='width:25%' type=\"number\" name=\"oldCommentsCount\" placeholder='7' min='0' step='1'></td>";
     $content .= "<td><input style='width:100%' type=\"text\" name=\"startEndDate\" placeholder='30.06.1995-25.12.1995'></td>";
+    $content .= "<td><input style='width:25%' type=\"number\" name=\"membershipYears\" placeholder='2 'min='0' step='1'></td>";
     $content .= "</tr>";
     $content .= "</table>";
     $content .= "<br>";
@@ -155,6 +156,15 @@ function global_coupons_admin_mainmenu() {
             echo "<script type='text/javascript'>alert('".$chosen_coupon."')</script>";
             header("Refresh: 0");
         }
+    }
+    if(wp_verify_nonce($_POST['nonce_of_couponSelectionForm'], 'coupon_selection_form_action') && isset($_POST['membershipYears']) && !empty($_POST['membershipYears']) && $is_coupon_selected)
+    {
+        $howManyYears = sanitize_text_field($_POST['membershipYears']);
+        $howManyYears = absint($howManyYears);
+        global_coupons_years_of_membership($coupon_id, $howManyYears );
+        $chosen_coupon .= "Selected Restriction: Required Years of Membership";
+        echo "<script type='text/javascript'>alert('".$chosen_coupon."')</script>";
+        header("Refresh: 0");
     }
     $content .= global_coupons_readme_part_1();
     $content .= "</div>";
@@ -276,7 +286,7 @@ function global_coupons_admin_submenu_2()
 {
     $content = "<h1>Preview</h1>";
     $content .= "<div class='preview'><h2>This is how the global coupons will be shown in the user side.</h2>";
-    $content .= "<h2>Be aware that, the Active/Deactive part is depending on the user account - in this case your account!</h2>";
+    $content .= "<h2>Be aware that, the Active/Inactive part is depending on the user account - in this case your account!</h2>";
     $content .= "<h2>Also note that, if the global coupon is not defined (blank comment/condition) then users will not see that coupon in the table but admin can.</h2>";
     
     $myCouponsLink = get_permalink( get_option('woocommerce_myaccount_page_id') );
@@ -319,7 +329,7 @@ function global_coupons_admin_submenu_4()
     $inputForFixed = $frontend_settings['fixed_cart'];
     $inputForPerc = $frontend_settings['percentage'];
     $inputForAct = $frontend_settings['active'];
-    $inputForDeact = $frontend_settings['deactive'];
+    $inputForDeact = $frontend_settings['inactive'];
     $inputForUsed = $frontend_settings['used'];
     $inputForEmpty = $frontend_settings['empty_cart'];
     $inputForText = $frontend_settings['th_text'];
@@ -330,11 +340,13 @@ function global_coupons_admin_submenu_4()
     $inputForSpecial = $frontend_settings['special_for_you'];
     $inputForReviews = $frontend_settings['number_of_reviews'];
     $inputForDates = $frontend_settings['date_interval'];
+    $inputForYears = $frontend_settings['years_of_membership'];
     $inputForNoCoupon = $frontend_settings['no_coupons_found'];
     $inputForYouHave = $frontend_settings['you_have'];
     $inputForCurrentlyOrders = $frontend_settings['currently_orders'];
     $inputForCurrentlyReviews = $frontend_settings['currently_reviews'];
     $inputForCurrentlyAmount = $frontend_settings['currently_amount'];
+    $inputForCurrentlyYears = $frontend_settings['currently_years'];
     
     $content .= "<h1>Settings</h1>";
     $content .= "<div class='settingsfirst'>";
@@ -347,6 +359,8 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th>Status</th></tr>";
     $content .= "<tr><th>Apply Coupon</th></tr>";
     $content .= "<tr><th>You Have</th></tr>";
+    $content .= "<tr><th>Table Header Background Color</th></tr>";
+    $content .= "<tr><th>Table Header Text Color</th></tr>";
     $content .= "</table></div>";
     
     $content .= "<div class='settingssecond'>";
@@ -360,6 +374,8 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th><input type='text' name='couponStatusInput' placeholder='".esc_html($inputForStatus)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='couponApplyInput' placeholder='".esc_html($inputForApply)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='couponYouHaveInput' placeholder='".esc_html($inputForYouHave)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='thBgInput' placeholder='".esc_html($inputForThBg)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='textInput' placeholder='".esc_html($inputForText)."'></th></tr>";
     $content .= "</table>";    
     
     $content .= wp_nonce_field('save_settings_form', 'nonce_of_saveSettingsForm');
@@ -378,6 +394,8 @@ function global_coupons_admin_submenu_4()
             if( isset($_POST['couponStatusInput']) && !empty($_POST['couponStatusInput']) ) $inputForStatus = sanitize_text_field($_POST['couponStatusInput']);
             if( isset($_POST['couponApplyInput']) && !empty($_POST['couponApplyInput']) ) $inputForApply = sanitize_text_field($_POST['couponApplyInput']);
             if( isset($_POST['couponYouHaveInput']) && !empty($_POST['couponYouHaveInput']) ) $inputForYouHave = sanitize_text_field($_POST['couponYouHaveInput']);
+            if( isset($_POST['thBgInput']) && !empty($_POST['thBgInput']) ) $inputForThBg = sanitize_text_field($_POST['thBgInput']);
+            if( isset($_POST['textInput']) && !empty($_POST['textInput']) ) $inputForText = sanitize_text_field($_POST['textInput']);
             
             $newOptions = array(
                 'coupon_code'   =>  $inputForCode,
@@ -389,7 +407,7 @@ function global_coupons_admin_submenu_4()
                 'fixed_cart'    =>  $inputForFixed,
                 'percentage'    =>  $inputForPerc,
                 'active'    =>  $inputForAct,
-                'deactive'  =>  $inputForDeact,
+                'inactive'  =>  $inputForDeact,
                 'used'  =>  $inputForUsed,
                 'empty_cart'    =>  $inputForEmpty,
                 'th_text'  =>  $inputForText,
@@ -400,11 +418,13 @@ function global_coupons_admin_submenu_4()
                 'special_for_you'   =>  $inputForSpecial,
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
+                'years_of_membership'   =>  $inputForYears,
                 'no_coupons_found' =>  $inputForNoCoupon,
                 'you_have'  =>  $inputForYouHave,
                 'currently_orders'  =>  $inputForCurrentlyOrders,
                 'currently_reviews' =>  $inputForCurrentlyReviews,
                 'currently_amount'  =>  $inputForCurrentlyAmount,
+                'currently_years'  =>  $inputForCurrentlyYears,
                 );
             
             update_option('global_coupons', $newOptions);
@@ -418,14 +438,13 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th>Fixed Cart Discount</th></tr>";
     $content .= "<tr><th>Percentage Discount</th></tr>";
     $content .= "<tr><th>Active</th></tr>";
-    $content .= "<tr><th>Deactive</th></tr>";
+    $content .= "<tr><th>Inactive</th></tr>";
     $content .= "<tr><th>Used</th></tr>";
     $content .= "<tr><th>Empty Cart</th></tr>";
     $content .= "<tr><th>Number of Orders</th></tr>";
     $content .= "<tr><th>Number of Reviews</th></tr>";
     $content .= "<tr><th>Amount of Orders</th></tr>";
-    $content .= "<tr><th>Table Header Background Color</th></tr>";
-    $content .= "<tr><th>Table Header Text Color</th></tr>";
+    $content .= "<tr><th>Years of Membership</th></tr>";
     $content .= "</table></div>";
     
     $content .= "<div class='settingssecond'>";
@@ -441,8 +460,7 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th><input type='text' name='currentlyOrderInput' placeholder='".esc_html($inputForCurrentlyOrders)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='currentlyReviewInput' placeholder='".esc_html($inputForCurrentlyReviews)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='currentlyAmountInput' placeholder='".esc_html($inputForCurrentlyAmount)."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='thBgInput' placeholder='".esc_html($inputForThBg)."'></th></tr>";
-    $content .= "<tr><th><input type='text' name='textInput' placeholder='".esc_html($inputForText)."'></th></tr></table>";
+    $content .= "<tr><th><input type='text' name='currentlyYearsInput' placeholder='".esc_html($inputForCurrentlyYears)."'></th></tr></table>";
     
     $content .= wp_nonce_field('save_settings_sec_form', 'nonce_of_saveSettingsSecForm');
     $content .= "<br><center><button class='de-button-admin de-button-anim-4' type='submit' name='getSecSettings' id='submitSettingsSecForm'>Save</button>";
@@ -463,8 +481,7 @@ function global_coupons_admin_submenu_4()
             if( isset($_POST['currentlyOrderInput']) && !empty($_POST['currentlyOrderInput']) ) $inputForCurrentlyOrders = sanitize_text_field($_POST['currentlyOrderInput']);
             if( isset($_POST['currentlyReviewInput']) && !empty($_POST['currentlyReviewInput']) ) $inputForCurrentlyReviews = sanitize_text_field($_POST['currentlyReviewInput']);
             if( isset($_POST['currentlyAmountInput']) && !empty($_POST['currentlyAmountInput']) ) $inputForCurrentlyAmount = sanitize_text_field($_POST['currentlyAmountInput']);
-            if( isset($_POST['thBgInput']) && !empty($_POST['thBgInput']) ) $inputForThBg = sanitize_text_field($_POST['thBgInput']);
-            if( isset($_POST['textInput']) && !empty($_POST['textInput']) ) $inputForText = sanitize_text_field($_POST['textInput']);
+            if( isset($_POST['currentlyYearsInput']) && !empty($_POST['currentlyYearsInput']) ) $inputForCurrentlyYears = sanitize_text_field($_POST['currentlyYearsInput']);
             
             $newOptions = array(
                 'coupon_code'   =>  $inputForCode,
@@ -476,7 +493,7 @@ function global_coupons_admin_submenu_4()
                 'fixed_cart'    =>  $inputForFixed,
                 'percentage'    =>  $inputForPerc,
                 'active'    =>  $inputForAct,
-                'deactive'  =>  $inputForDeact,
+                'inactive'  =>  $inputForDeact,
                 'used'  =>  $inputForUsed,
                 'empty_cart'    =>  $inputForEmpty,
                 'th_text'  =>  $inputForText,
@@ -487,11 +504,13 @@ function global_coupons_admin_submenu_4()
                 'special_for_you'   =>  $inputForSpecial,
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
+                'years_of_membership'   =>  $inputForYears,
                 'no_coupons_found' =>  $inputForNoCoupon,
                 'you_have'  =>  $inputForYouHave,
                 'currently_orders'  =>  $inputForCurrentlyOrders,
                 'currently_reviews' =>  $inputForCurrentlyReviews,
                 'currently_amount'  =>  $inputForCurrentlyAmount,
+                'currently_years'  =>  $inputForCurrentlyYears,
                 );
             
             update_option('global_coupons', $newOptions);
@@ -509,7 +528,8 @@ function global_coupons_admin_submenu_4()
                 'fixed_cart'    =>  'Fixed Cart Discount',
                 'percentage'    =>  'Percentage Cart Discount',
                 'active'    =>  'Active',
-                'deactive'  =>  'Deactive',
+                'inactive'  =>  'Inactive',
+                'used'  =>  'Used',
                 'empty_cart'    =>  'Empty Cart',
                 'th_text'  =>  'white',
                 'th_bg' =>  '#333333',
@@ -519,12 +539,13 @@ function global_coupons_admin_submenu_4()
                 'special_for_you'   =>  'Special Discount For You',
                 'number_of_reviews' =>  'Required number of reviews',
                 'date_interval' =>  'Available Between',
+                'years_of_membership' =>  'Required years of membership',
                 'no_coupons_found' =>  'No Global Coupons Found',
                 'you_have'  =>  'You Have',
                 'currently_orders'  =>  'Number of Orders',
                 'currently_reviews'  =>  'Number of Reviews',
                 'currently_amount'  =>  'Amount of Orders',
-                'used'  =>  'Used',
+                'currently_years'   =>  'Years of Membership',
                 );
                 
             $defaultOptions2 = array(
@@ -551,6 +572,7 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th>Special Discount For You</th></tr>";
     $content .= "<tr><th>Required number of reviews</th></tr>";
     $content .= "<tr><th>Available Between</th></tr>";
+    $content .= "<tr><th>Required years of membership</th></tr>";
     $content .= "<tr><th>No Global Coupons Found</th></tr>";
     $content .= "</table></div>";
     
@@ -564,6 +586,7 @@ function global_coupons_admin_submenu_4()
     $content .= "<tr><th><input type='text' name='specialForYouInput' placeholder='".esc_html($inputForSpecial)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='reviewInput' placeholder='".esc_html($inputForReviews)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='datesInput' placeholder='".esc_html($inputForDates)."'></th></tr>";
+    $content .= "<tr><th><input type='text' name='yearsInput' placeholder='".esc_html($inputForYears)."'></th></tr>";
     $content .= "<tr><th><input type='text' name='noCouponInput' placeholder='".esc_html($inputForNoCoupon)."'></th></tr></table>";
     
     $content .= wp_nonce_field('save_settings_third_form', 'nonce_of_saveSettingsThirdForm');
@@ -579,6 +602,7 @@ function global_coupons_admin_submenu_4()
             if( isset($_POST['specialForYouInput']) && !empty($_POST['specialForYouInput']) ) $inputForSpecial = sanitize_text_field($_POST['specialForYouInput']);
             if( isset($_POST['reviewInput']) && !empty($_POST['reviewInput']) ) $inputForReviews = sanitize_text_field($_POST['reviewInput']);
             if( isset($_POST['datesInput']) && !empty($_POST['datesInput']) ) $inputForDates = sanitize_text_field($_POST['datesInput']);
+            if( isset($_POST['yearsInput']) && !empty($_POST['yearsInput']) ) $inputForYears = sanitize_text_field($_POST['yearsInput']);
             if( isset($_POST['noCouponInput']) && !empty($_POST['noCouponInput']) ) $inputForNoCoupon = sanitize_text_field($_POST['noCouponInput']);
             
             $newOptions = array(
@@ -591,7 +615,7 @@ function global_coupons_admin_submenu_4()
                 'fixed_cart'    =>  $inputForFixed,
                 'percentage'    =>  $inputForPerc,
                 'active'    =>  $inputForAct,
-                'deactive'  =>  $inputForDeact,
+                'inactive'  =>  $inputForDeact,
                 'used'  =>  $inputForUsed,
                 'empty_cart'    =>  $inputForEmpty,
                 'th_text'  =>  $inputForText,
@@ -602,11 +626,13 @@ function global_coupons_admin_submenu_4()
                 'special_for_you'   =>  $inputForSpecial,
                 'number_of_reviews' =>  $inputForReviews,
                 'date_interval' =>  $inputForDates,
+                'years_of_membership'   =>  $inputForYears,
                 'no_coupons_found' =>  $inputForNoCoupon,
                 'you_have'  =>  $inputForYouHave,
                 'currently_orders'  =>  $inputForCurrentlyOrders,
                 'currently_reviews' =>  $inputForCurrentlyReviews,
                 'currently_amount'  =>  $inputForCurrentlyAmount,
+                'currently_years'  =>  $inputForCurrentlyYears,
                 );
             
             update_option('global_coupons', $newOptions);
