@@ -8,7 +8,7 @@ Current restrictions: First Order, Required Number of Orders, Required Amount of
 
 Usage: 
 
-- Download the zipped file (global-coupons-for-woocommerce.1.2.2.zip) and upload it to wp-content/plugins using FTP or using Admin Panel -> Plugins -> Add New -> Upload Plugin, then extract there. 
+- Download the current version from release folder and upload it to wp-content/plugins using FTP or using Admin Panel -> Plugins -> Add New -> Upload Plugin, then extract there. 
 
 or
 
