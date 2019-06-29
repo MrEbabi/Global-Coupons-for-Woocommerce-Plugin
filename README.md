@@ -72,10 +72,14 @@ Version 1.2.3:
 - No Coupons Found message showing bug is fixed.
 - Available Date Interval feature activeness bug is fixed.
 
+Version 1.3.0
+- New Restriction: “Required Years of Membership” for global coupons.
+- Relevant setting fields for Years Of Membership restriction.
+- Additional CSS.
+
 -----
 
 To-Do: 
 - A video tutorial for example usage.
 - Live Preview Link
-- New Restriction: At Least X Years Membership
 - New Restriction: Birthday
