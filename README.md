@@ -83,3 +83,4 @@ To-Do:
 - A video tutorial for example usage.
 - Live Preview Link
 - New Restriction: Birthday
+- Responsive CSS corrections for Settings page.
