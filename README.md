@@ -80,7 +80,8 @@ Version 1.3.0
 -----
 
 To-Do: 
-- A video tutorial for example usage.
-- Live Preview Link
-- New Restriction: Birthday
-- Responsive CSS corrections for Settings page.
+- A video tutorial for example usage. *
+- Live Preview Link *
+- New Restriction: Birthday **
+- Responsive CSS corrections for Settings page. *
+- Combine Restrictions ***
