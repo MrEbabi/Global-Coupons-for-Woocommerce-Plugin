@@ -77,10 +77,12 @@ Version 1.3.0
 - Relevant setting fields for Years Of Membership restriction.
 - Additional CSS.
 
+Version 1.3.1
+- Update the Woocommerce version.
+- Update the Wordpress version.
 -----
 
 To-Do: 
-- A video tutorial for example usage. *
 - Live Preview Link *
 - New Restriction: Birthday **
 - Responsive CSS corrections for Settings page. *
